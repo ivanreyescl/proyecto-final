@@ -1,0 +1,30 @@
+.nav-item-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item-box:hover {
+    background-color: #e0e0e0;
+}
+.nav-link {
+    color: white !important;
+    text-decoration: none;
+}
+.nav-link:visited,
+.nav-link:active,
+.nav-link:hover {
+    color: white !important;
+}
+
+.navbar a {
+    color: white !important;
+    text-decoration: none;
+}
+
+.navbar a:visited,
+.navbar a:active,
+.navbar a:hover {
+    color: white !important
+}

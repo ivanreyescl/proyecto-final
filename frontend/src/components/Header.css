@@ -1,0 +1,13 @@
+header {
+    min-height: 250px;
+    max-height: 400px;
+    background-blend-mode: overlay;
+    /* una duda, esto deberia ir en SRC/COMPONENTS o deberia ir en PUBLIC?*/
+    background-image: url('../public/Header.jpg');
+    /* -- */
+    background-size: cover;
+    background-position: center;
+}
+hr {
+    opacity: calc(0.1);
+}

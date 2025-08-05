@@ -1,0 +1,79 @@
+import { createContext, useState } from 'react';
+import axios from 'axios';
+
+export const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
+    const [token, setToken] = useState(localStorage.getItem('token') || '')
+    const [email, setEmail] = useState(localStorage.getItem('email') || '')
+
+    const auth = async (email, password) => {
+        try {
+            const URL = 'http://localhost:5000/api/auth/login';
+            const { data } = await axios.post(URL, { email, password })
+            setToken(data.token)
+            setEmail(data.email)
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('email', data.email)
+            return true
+        } catch (error) {
+            alert(error.response?.data?.message || 'Error en la autenticación')
+            return false
+        }
+    };
+
+    const register = async (email, password) => {
+        try {
+            const URL = 'http://localhost:5000/api/auth/register'
+            const { data } = await axios.post(URL, { email, password })
+            setToken(data.token)
+            setEmail(data.email)
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('email', data.email)
+            alert('Usuario registrado exitosamente, se ha iniciado sesión automaticamente.')
+            return true
+        } catch (error) {
+            alert(error.response?.data?.message || 'Error al registrar el usuario')
+            return false
+        }
+    };
+
+    const logout = () => {
+        setToken('')
+        setEmail('')
+        localStorage.removeItem('token')
+        localStorage.removeItem('email')
+        alert('Se ha cerrado sesión')
+    }
+
+    const profile = async () => {
+        const token = localStorage.getItem('token')
+        try {
+            const { data } = await axios.get('http://localhost:5000/api/auth/me', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            setUser(data)
+            return true
+        } catch (error) {
+            alert(error.response?.data?.message || 'Error al obtener el perfil del usuario')
+            return false
+        }
+    }
+
+    const setUserState = {
+        token,
+        email,
+        auth,
+        register,
+        profile,
+        logout
+    }
+    return (
+        
+        <UserContext.Provider value={setUserState}>
+            {children}
+        </UserContext.Provider>
+    );
+};
+
+export default UserProvider

@@ -5,39 +5,39 @@ export const CartContext = createContext()
 const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([])
 
-    const addToCart = (pizzaToAdd) => {
+    const addToCart = (productToAdd) => {
         setCart((prevCart) => {
-          const pizzaInCart = prevCart.find(pizza => pizza.id === pizzaToAdd.id)
-          if (pizzaInCart) {
-            return prevCart.map(pizza =>
-              pizza.id === pizzaToAdd.id ? { ...pizza, count: pizza.count + 1 } : pizza
+          const productInCart = prevCart.find(product => product.id === productToAdd.id)
+          if (productInCart) {
+            return prevCart.map(product =>
+              product.id === productToAdd.id ? { ...product, count: product.count + 1 } : product
             )
           } else {
-            return [...prevCart, { ...pizzaToAdd, count: 1 }]
+            return [...prevCart, { ...productToAdd, count: 1 }]
           }
         })
       }
       
     const increaseQuantity = (id) => {
-        setCart(cart.map(pizza =>
-            pizza.id === id ? { ...pizza, count: pizza.count + 1 } : pizza
+        setCart(cart.map(product =>
+            product.id === id ? { ...product, count: product.count + 1 } : product
         ))
     }
 
     const decreaseQuantity = (id) => {
-        setCart(cart.reduce((acc, pizza) => {
-            if (pizza.id === id) {
-                if (pizza.count > 1) {
-                    acc.push({ ...pizza, count: pizza.count - 1 });
+        setCart(cart.reduce((acc, product) => {
+            if (product.id === id) {
+                if (product.count > 1) {
+                    acc.push({ ...product, count: product.count - 1 });
                 }
             } else {
-                acc.push(pizza);
+                acc.push(product);
             }
             return acc;
         }, []));
     }
 
-    const total = cart.reduce((acc, pizza) => acc + pizza.price * pizza.count, 0)
+    const total = cart.reduce((acc, product) => acc + product.price * product.count, 0)
 
 
     

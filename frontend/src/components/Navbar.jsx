@@ -13,14 +13,14 @@ const Navbar = () => {
             <div className="container-fluid">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item-title">
-                        <Link className="nav-link text-white" to="/">¡Pizzería Mamma Mia!</Link>
+                        <Link className="nav-link text-white" to="/">¡Pc Components!</Link>
                     </li>
                     <li className="nav-item-box">
-                        <Link className="nav-link text-white" to="/">🍕 Home</Link>
+                        <Link className="nav-link text-white" to="/"> Home</Link>
                     </li>
                     {/*
                         <li className="nav-item-box">
-                            <Link className="nav-link text-white" to="/pizza/p001">🍕 Pizzas</Link>
+                            <Link className="nav-link text-white" to="/product/p001">Products</Link>
                         </li>
                     */}
                     <li className="nav-item-box">
@@ -42,7 +42,7 @@ const Navbar = () => {
                 </ul>
                 <div className="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li className="nav-item-box">
-                        <Link className="nav-link text-white" id="total_pizza" to="/cart">
+                        <Link className="nav-link text-white" id="total_product" to="/cart">
                             🛒 ${formattedTotal}
                         </Link>
                     </li>

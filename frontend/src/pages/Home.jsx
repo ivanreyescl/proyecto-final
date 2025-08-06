@@ -1,11 +1,11 @@
 import Header from '../components/Header'
-import Pizza from "../pages/Pizza"
+import Product from "../pages/Product"
 
 const Home = () => {  
     return (
         <>
             <Header/>
-            <Pizza />
+            <Product />
         </>
     )
 }

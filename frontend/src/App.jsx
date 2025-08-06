@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home.jsx";
-import Pizza from "./pages/Pizza.jsx";
+import Product from "./pages/Product.jsx";
 import Navbar from './components/Navbar.jsx'
 import Footer from "./components/Footer.jsx";
 import Cart from "./pages/Cart.jsx";
@@ -8,7 +8,7 @@ import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import NotFound from './pages/NotFound.jsx'
 import Profile from './pages/Profile.jsx'
-import PizzasProvider from './context/PizzasContext'
+import ProductsProvider from './context/ProductsContext'
 import CartProvider from './context/CartContext'
 import UserProvider from './context/UserContext'
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -20,7 +20,7 @@ const App = () => {
       <BrowserRouter>
         <UserProvider>
           <CartProvider>
-            <PizzasProvider>
+            <ProductsProvider>
               <Navbar/>
                 <Routes>
                   <Route path="/" element={<Home />} />
@@ -37,7 +37,7 @@ const App = () => {
                     } 
                   />
                   <Route path="/cart" element={<Cart /> }/>                  
-                  <Route path="/pizza/:id" element={<Pizza />} />
+                  <Route path="/product/:id" element={<Product />} />
                   <Route path="/profile" element={
                     <ProtectedRoute>
                       <Profile />
@@ -47,7 +47,7 @@ const App = () => {
                   <Route path="/404" element={<NotFound />} />
                 </Routes>
               <Footer/>
-            </PizzasProvider>
+            </ProductsProvider>
           </CartProvider>
         </UserProvider>
       </BrowserRouter>

@@ -10,43 +10,41 @@ const Navbar = () => {
     const formattedTotal = total.toLocaleString()
     return (
         <nav className="navbar navbar-expand-lg bg-dark text-white">
-            <div className="container-fluid">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item-title">
-                        <Link className="nav-link text-white" to="/">¡Pc Components!</Link>
-                    </li>
-                    <li className="nav-item-box">
-                        <Link className="nav-link text-white" to="/"> Home</Link>
-                    </li>
-                    {/*
-                        <li className="nav-item-box">
+            <div className="container-fluid justify-content-end">
+                <li className="nav-item-title me-3">
+                    <Link className="nav-link text-white" to="/">¡ Pc Components!</Link>
+                </li>
+                <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row align-items-center">
+                    {/* 
+                        <li className="nav-item-box me-3">
                             <Link className="nav-link text-white" to="/product/p001">Products</Link>
                         </li>
                     */}
-                    <li className="nav-item-box">
+                    <li className="nav-item me-3">
                         <Link className="nav-link text-white" to={token ? "/profile" : "/login"}>
-                            {token ? "👤 Profile" : "🔐 Login"}
+                            {token ? "👤 Perfil" : " Iniciar Sesión"}
                         </Link>
                     </li>
-                    <li className="nav-item-box">
+                    <li className="nav-item me-3">
                         {token ? (
                             <Link className="nav-link text-white" to="/" onClick={logout}>
-                                🔒 Logout
+                                Cerrar Sesión
                             </Link>
                         ) : (
                             <Link className="nav-link text-white" to="/register">
-                                📝 Register
+                                Registrarse
                             </Link>
                         )}
                     </li>
-                </ul>
-                <div className="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li className="nav-item-box">
+                    <li className="nav-item me-3">
+                        <Link className="nav-link text-white" to="/products">Productos</Link>
+                    </li>
+                    <li className="nav-item">
                         <Link className="nav-link text-white" id="total_product" to="/cart">
                             🛒 ${formattedTotal}
                         </Link>
                     </li>
-                </div>
+                </ul>
             </div>
         </nav>
     )

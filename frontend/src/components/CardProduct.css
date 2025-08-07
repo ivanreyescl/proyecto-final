@@ -1,0 +1,33 @@
+.card-img-top {
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.card-img-top:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
+    z-index: 2;
+}
+
+.card-img-top {
+    transition: filter 0.3s;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 16px;
+}
+
+.card:hover .card-img-top {
+    filter: brightness(1.08) saturate(1.1);
+}
+
+.card-img-top-single {
+    transition: filter 0.3s;
+    width: 550px;
+    height: 550px;
+    object-fit: contain;
+    border-radius: 4px;
+}

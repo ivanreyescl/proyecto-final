@@ -1,11 +1,11 @@
 import Header from '../components/Header'
-import Product from "../pages/Product"
+import FeaturedProduct from "../pages/FeaturedProduct"
 
 const Home = () => {  
     return (
         <>
             <Header/>
-            <Product />
+            <FeaturedProduct/>
         </>
     )
 }

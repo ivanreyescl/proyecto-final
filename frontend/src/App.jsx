@@ -8,6 +8,7 @@ import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import NotFound from './pages/NotFound.jsx'
 import Profile from './pages/Profile.jsx'
+import Products from './pages/Products.jsx'
 import ProductsProvider from './context/ProductsContext'
 import CartProvider from './context/CartContext'
 import UserProvider from './context/UserContext'
@@ -34,6 +35,10 @@ const App = () => {
                     <ProtectedRoute>
                       <Login />
                     </ProtectedRoute>
+                    } 
+                  />
+                  <Route path="/products" element={
+                      <Products />
                     } 
                   />
                   <Route path="/cart" element={<Cart /> }/>                  

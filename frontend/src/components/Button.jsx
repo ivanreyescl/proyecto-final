@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
+import './Button.css'; 
 
-const Button = ({ label, bgColor, textColor, icon, onClick, link }) => {
+const Button = ({ label, icon, onClick, link }) => {
     const ButtonContent = (
         <button
-            className={`btn ${bgColor ? `btn-${bgColor}` : ''} ${textColor ? `text-${textColor}` : ''}`}
+            className={`media-boton`}
             onClick={onClick}
         >
             {label}

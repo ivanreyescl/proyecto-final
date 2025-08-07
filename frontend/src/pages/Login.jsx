@@ -39,7 +39,7 @@ const Login = () => {
                     <h2 className="card-title text-center">Iniciar sesión</h2>
                     <form onSubmit={handleLogin}>
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Correo electrónico</label>
+                            <label htmlFor="email" className="form-label">Email</label>
                             <input
                                 type="email"
                                 className="form-control"
@@ -47,7 +47,7 @@ const Login = () => {
                                 name="email"
                                 value={user.email}
                                 onChange={handleChange}
-                                placeholder="Ingrese correo"
+                                placeholder="Ingrese su email"
                                 required
                             />
                         </div>
@@ -59,7 +59,7 @@ const Login = () => {
                                 id="password"
                                 name="password"
                                 value={user.password}
-                                placeholder="Ingrese contraseña"
+                                placeholder="Ingrese su contraseña"
                                 onChange={handleChange}
                                 required
                             />

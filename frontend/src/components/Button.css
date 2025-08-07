@@ -1,0 +1,21 @@
+.media-boton{
+    display: inline-flex;
+    align-items: space-around;
+    justify-content: space-around;
+    padding: 0.5rem 5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+.media-boton:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
+    z-index: 2;
+}

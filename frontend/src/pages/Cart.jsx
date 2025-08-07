@@ -25,19 +25,19 @@ const Cart = () => {
         <div className="container text-center">
             {cart.length > 0 ? (
                 <>
-                    {cart.map(pizza => (
-                        <div key={pizza.id + pizza.name} className="row align-items-center mb-3">
+                    {cart.map(product => (
+                        <div key={product.id + product.name} className="row align-items-center mb-3">
                             <div className="col-md-2">
-                                <img src={pizza.img} alt={pizza.name} className="img-fluid" />
+                                <img src={product.img} alt={product.name} className="img-fluid" />
                             </div>
                             <div className="col-md-4">
-                                <h3>{pizza.name}</h3>
+                                <h3>{product.name}</h3>
                             </div>
                             <div className="col-md-4 d-flex justify-content-center align-items-center">
-                                <p className="p-5 fw-bold">Precio: ${pizza.price}</p>
-                                <button className="btn btn-outline-danger" onClick={() => decreaseQuantity(pizza.id)}>-</button>
-                                <span className="mx-3 fw-bold">{pizza.count}</span>
-                                <button className="btn btn-outline-primary" onClick={() => increaseQuantity(pizza.id)}>+</button>
+                                <p className="p-5 fw-bold">Precio: ${product.price}</p>
+                                <button className="btn btn-outline-danger" onClick={() => decreaseQuantity(product.id)}>-</button>
+                                <span className="mx-3 fw-bold">{product.count}</span>
+                                <button className="btn btn-outline-primary" onClick={() => increaseQuantity(product.id)}>+</button>
                             </div>
                         </div>
                     ))}

@@ -4,6 +4,8 @@ import { UserContext } from '../context/UserContext';
 const Register = () => {
     const [user, setUser] = useState({
         email: '',
+        firstName: '',
+        lastName: '',
         password: '',
         confirmPassword: ''
     });
@@ -18,7 +20,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, password, confirmPassword } = user;
+        const { email, firstName, lastName, password, confirmPassword } = user;
 
         if (password.length < 6) {
             return returnAlert('La contraseña debe tener al menos 6 caracteres');
@@ -27,10 +29,10 @@ const Register = () => {
         } else if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
             return returnAlert('Por favor rellena todos los campos')
         } else {
-            const isRegistered = await register(email, password)
+            const isRegistered = await register(email, firstName, lastName, password)
 
             if (isRegistered) {
-                setUser({ email: '', password: '', confirmPassword: '' })
+                setUser({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' })
                 window.location.href = '/'
             }
         }
@@ -43,7 +45,7 @@ const Register = () => {
                     <h2 className="card-title text-center">Registrarse</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Correo electrónico</label>
+                            <label htmlFor="email" className="form-label">Email</label>
                             <input
                                 type="email"
                                 className="form-control"
@@ -51,7 +53,33 @@ const Register = () => {
                                 name="email"
                                 value={user.email}
                                 onChange={handleChange}
-                                placeholder="Ingrese correo"
+                                placeholder="Ingrese su email"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="firstName" className="form-label">Nombre</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="firstName"
+                                name="firstName"
+                                value={user.firstName}
+                                onChange={handleChange}
+                                placeholder="Ingrese su nombre"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="lastName" className="form-label">Apellido</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="lastName"
+                                name="lastName"
+                                value={user.lastName}
+                                onChange={handleChange}
+                                placeholder="Ingrese su apellido"
                                 required
                             />
                         </div>
@@ -63,7 +91,7 @@ const Register = () => {
                                 id="password"
                                 name="password"
                                 value={user.password}
-                                placeholder="Ingrese contraseña"
+                                placeholder="Ingrese una contraseña"
                                 onChange={handleChange}
                                 required
                             />
@@ -75,7 +103,7 @@ const Register = () => {
                                 className="form-control"
                                 id="confirmPassword"
                                 name="confirmPassword"
-                                placeholder="Confirme contraseña"
+                                placeholder="Confirme la contraseña"
                                 value={user.confirmPassword}
                                 onChange={handleChange}
                                 required
@@ -84,7 +112,7 @@ const Register = () => {
                         <button
                             type="submit"
                             className="btn btn-primary w-100"
-                            disabled={!user.email.trim() || !user.password.trim() || !user.confirmPassword.trim()}
+                            disabled={!user.email.trim() || !user.firstName.trim() || !user.lastName.trim() || !user.password.trim() || !user.confirmPassword.trim()}
                         >
                             Registrarse
                         </button>

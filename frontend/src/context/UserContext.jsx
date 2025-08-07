@@ -6,6 +6,8 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token') || '')
     const [email, setEmail] = useState(localStorage.getItem('email') || '')
+    const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '')
+    const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '')
 
     const auth = async (email, password) => {
         try {
@@ -22,14 +24,18 @@ export const UserProvider = ({ children }) => {
         }
     };
 
-    const register = async (email, password) => {
+    const register = async (email, firstName, lastName, password) => {
         try {
             const URL = 'http://localhost:5000/api/auth/register'
-            const { data } = await axios.post(URL, { email, password })
+            const { data } = await axios.post(URL, { email, firstName, lastName, password })
             setToken(data.token)
             setEmail(data.email)
+            setFirstName(data.firstName)
+            setLastName(data.lastName)
             localStorage.setItem('token', data.token)
             localStorage.setItem('email', data.email)
+            localStorage.setItem('firstName', data.firstName)
+            localStorage.setItem('lastName', data.lastName)
             alert('Usuario registrado exitosamente, se ha iniciado sesión automaticamente.')
             return true
         } catch (error) {
@@ -63,13 +69,14 @@ export const UserProvider = ({ children }) => {
     const setUserState = {
         token,
         email,
+        firstName,
+        lastName,
         auth,
         register,
         profile,
         logout
     }
     return (
-        
         <UserContext.Provider value={setUserState}>
             {children}
         </UserContext.Provider>

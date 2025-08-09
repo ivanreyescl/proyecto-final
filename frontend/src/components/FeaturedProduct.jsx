@@ -13,7 +13,7 @@ const FeaturedProduct = ({ id, name, price, image, detail, category }) => {
 
     return (
         <div className="card shadow-sm featured-card">
-            <Link to={`/product/${id}`}>
+            <Link to={`/products/${id}`}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <img
                         src={image}
@@ -34,7 +34,7 @@ const FeaturedProduct = ({ id, name, price, image, detail, category }) => {
                 <div className="d-flex justify-content-between">
                     <Button 
                         label="Ver más" 
-                        link={`/product/${id}`}
+                        link={`/products/${id}`}
                     />
                     <Button 
                         label="Agregar al carrito" 

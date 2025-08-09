@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import Home from "./pages/Home.jsx";
 import Product from "./components/Product.jsx";
 import Navbar from './components/Navbar.jsx'
@@ -52,7 +52,7 @@ const App = () => {
                       } 
                     />
                     <Route path="/cart" element={<Cart /> }/>                  
-                    <Route path="/product/:id" element={<Product />} />
+                    <Route path="/products/:id" element={<Product />} />
                     <Route path="/profile" element={
                       <ProtectedRoute>
                         <Profile />

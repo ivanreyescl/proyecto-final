@@ -12,7 +12,7 @@ const CardProduct = ({ id, name, price, image, detail, category }) => {
 
   return (
     <div className="card cardproduct shadow-sm">
-      <Link to={`/product/${id}`}>
+      <Link to={`/products/${id}`}>
         <img
           src={image}
           className="card-img-top"

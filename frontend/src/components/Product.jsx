@@ -13,7 +13,7 @@ const Product = () => {
     if (loading) return <p>Cargando products...</p>;
 
     if (id) {
-        const selectedProduct = product?.find((p) => p.id === Number(id))
+        const selectedProduct = product?.find((p) => p.id === (id))
 
         if (!selectedProduct) return <p>Producto no encontrado</p>
 

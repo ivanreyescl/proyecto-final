@@ -11,9 +11,9 @@ export const UserProvider = ({ children }) => {
 
     const auth = async (email, password) => {
         try {
-            const URL = 'http://localhost:5000/api/auth/login';
+            const URL = 'http://localhost:5000/login';
             const { data } = await axios.post(URL, { email, password })
-            setToken(data.token)
+            setToken(data.accessToken)
             setEmail(data.email)
             localStorage.setItem('token', data.token)
             localStorage.setItem('email', data.email)
@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
         try {
             const URL = 'http://localhost:5000/api/auth/register'
             const { data } = await axios.post(URL, { email, firstName, lastName, password })
-            setToken(data.token)
+            setToken(data.accessToken)
             setEmail(data.email)
             setFirstName(data.firstName)
             setLastName(data.lastName)

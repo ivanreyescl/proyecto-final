@@ -19,6 +19,9 @@ const Product = () => {
     return (
         <div className="container mt-6">
             <div className="row">
+                <h2 className="text-left fw-bold p-1">Productos Destacados</h2>
+            </div>
+            <div className="row">
                 {product && shuffleArray(product).slice(0,2).map((p, index) => (
                     <div key={index} className="col-md-6 col-sm-6 col-12 mb-4">
                         <FeaturedProduct

@@ -1,5 +1,10 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+    
+const returnAlert = (message) => toast.error(message, { autoClose: 2000 });
+const returnSuccess = (message) => toast.success(message, { autoClose: 2000 });
+
 
 export const UserContext = createContext();
 
@@ -19,7 +24,7 @@ export const UserProvider = ({ children }) => {
             localStorage.setItem('email', data.email)
             return true
         } catch (error) {
-            alert(error.response?.data?.message || 'Error en la autenticación')
+            returnAlert(error.response?.data?.message || 'Error en la autenticación')
             return false
         }
     };
@@ -36,10 +41,10 @@ export const UserProvider = ({ children }) => {
             localStorage.setItem('email', data.email)
             localStorage.setItem('firstName', data.firstName)
             localStorage.setItem('lastName', data.lastName)
-            alert('Usuario registrado exitosamente, se ha iniciado sesión automaticamente.')
+            returnSuccess('Usuario registrado exitosamente, se ha iniciado sesión automaticamente.')
             return true
         } catch (error) {
-            alert(error.response?.data?.message || 'Error al registrar el usuario')
+            returnAlert(error.response?.data?.message || 'Error al registrar el usuario')
             return false
         }
     };
@@ -49,7 +54,7 @@ export const UserProvider = ({ children }) => {
         setEmail('')
         localStorage.removeItem('token')
         localStorage.removeItem('email')
-        alert('Se ha cerrado sesión')
+        returnSuccess('Se ha cerrado sesión')
     }
 
     const profile = async () => {
@@ -61,7 +66,7 @@ export const UserProvider = ({ children }) => {
             setUser(data)
             return true
         } catch (error) {
-            alert(error.response?.data?.message || 'Error al obtener el perfil del usuario')
+            returnAlert(error.response?.data?.message || 'Error al obtener el perfil del usuario')
             return false
         }
     }

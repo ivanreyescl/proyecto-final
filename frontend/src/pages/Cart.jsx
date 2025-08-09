@@ -28,7 +28,7 @@ const Cart = () => {
                     {cart.map(product => (
                         <div key={product.id + product.name} className="row align-items-center mb-3">
                             <div className="col-md-2">
-                                <img src={product.img} alt={product.name} className="img-fluid" />
+                                <img src={product.image} alt={product.name} className="img-fluid" />
                             </div>
                             <div className="col-md-4">
                                 <h3>{product.name}</h3>

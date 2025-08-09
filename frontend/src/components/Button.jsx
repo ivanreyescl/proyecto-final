@@ -1,22 +1,32 @@
 import { Link } from 'react-router-dom';
-import './Button.css'; 
+import './Button.css';
 
-const Button = ({ label, icon, onClick, link }) => {
+const Button = ({ label, icon, onClick, link, type = "button", disabled, ...rest }) => {
     const ButtonContent = (
         <button
-            className={`media-boton`}
+            type={type}
+            className="media-boton"
             onClick={onClick}
+            disabled={disabled}
+            {...rest}
         >
+            {icon && <i className={`fa fa-${icon} p-2`}></i>}
+            {''}
             {label}
-            <i className={`fa ${icon ? `fa-${icon}` : ''}`}></i>
         </button>
-    )
+    );
 
-    return (
-        <div className="button">
-            {link ? <Link to={link}>{ButtonContent}</Link> : ButtonContent}
-        </div>
-    )
-}
+    if (link) {
+        return (
+            <div className="button">
+                <Link to={link}>
+                    {ButtonContent}
+                </Link>
+            </div>
+        );
+    }
 
-export default Button
+    return <div className="button">{ButtonContent}</div>;
+};
+
+export default Button;

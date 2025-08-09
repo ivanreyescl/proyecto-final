@@ -1,0 +1,58 @@
+.featured-card {
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.price-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: gold;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 56 66px 66px white;
+  animation: pulse 1.5s infinite;
+  transition: transform 0.3s ease;
+}
+
+.price-badge:hover {
+  transform: scale(1.2);
+}
+
+.card-featured-img:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 32px white, 0 1.5px 6px white;
+    z-index: 2;
+    filter: brightness(1.08) saturate(1.1);
+}
+
+.card-featured-img {
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    background: #fff;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 16px;
+}
+
+.card-featured-img-single {
+    transition: filter 0.3s;
+    width: 550px;
+    height: 550px;
+    object-fit: contain;
+    border-radius: 4px;
+}

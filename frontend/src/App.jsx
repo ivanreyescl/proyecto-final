@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Home from "./pages/Home.jsx";
-import Product from "./pages/Product.jsx";
+import Product from "./components/Product.jsx";
 import Navbar from './components/Navbar.jsx'
 import Footer from "./components/Footer.jsx";
 import Cart from "./pages/Cart.jsx";
@@ -13,50 +14,59 @@ import ProductsProvider from './context/ProductsContext'
 import CartProvider from './context/CartContext'
 import UserProvider from './context/UserContext'
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import ProductsForms from './components/ProductForm.jsx';
 
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
-        <UserProvider>
-          <CartProvider>
-            <ProductsProvider>
-              <Navbar/>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/register" element={                    
-                    <ProtectedRoute>
-                      <Register />
-                    </ProtectedRoute>
-                    } 
-                  />
-                  <Route path="/login" element={
-                    <ProtectedRoute>
-                      <Login />
-                    </ProtectedRoute>
-                    } 
-                  />
-                  <Route path="/products" element={
-                      <Products />
-                    } 
-                  />
-                  <Route path="/cart" element={<Cart /> }/>                  
-                  <Route path="/product/:id" element={<Product />} />
-                  <Route path="/profile" element={
-                    <ProtectedRoute>
-                      <Profile />
-                    </ProtectedRoute>
-                    } 
-                  />
-                  <Route path="/404" element={<NotFound />} />
-                </Routes>
-              <Footer/>
-            </ProductsProvider>
-          </CartProvider>
-        </UserProvider>
+          <UserProvider>
+            <CartProvider>
+              <ProductsProvider>
+                <Navbar/>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/register" element={                    
+                      <ProtectedRoute>
+                        <Register />
+                      </ProtectedRoute>
+                      } 
+                    />
+                    <Route path="/login" element={
+                      <ProtectedRoute>
+                        <Login />
+                      </ProtectedRoute>
+                      } 
+                    />
+                    <Route path="/products" element={
+                        <Products />
+                      } 
+                    />
+                    <Route path="/products/new" element={
+                        <ProductsForms />
+                      } 
+                    />
+                    <Route path="/products/edit/:id" element={
+                        <ProductsForms />
+                      } 
+                    />
+                    <Route path="/cart" element={<Cart /> }/>                  
+                    <Route path="/product/:id" element={<Product />} />
+                    <Route path="/profile" element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                      } 
+                    />
+                    <Route path="/404" element={<NotFound />} />
+                  </Routes>
+                <Footer/>
+              </ProductsProvider>
+            </CartProvider>
+          </UserProvider>
+        <ToastContainer />             
       </BrowserRouter>
-
     </>
   );
 };

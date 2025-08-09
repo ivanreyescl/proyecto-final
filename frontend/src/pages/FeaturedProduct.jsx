@@ -1,6 +1,15 @@
 import { useContext } from 'react'
-import { FeaturedProduct }  from "../components/CardProduct"
+import FeaturedProduct  from "../components/FeaturedProduct"
 import { ProductContext } from "../context/ProductsContext"
+
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
 
 const Product = () => {
     const { product, loading } = useContext(ProductContext)
@@ -10,13 +19,13 @@ const Product = () => {
     return (
         <div className="container mt-6">
             <div className="row">
-                {product && product.slice(0, 2).map((p, index) => (
+                {product && shuffleArray(product).slice(0,2).map((p, index) => (
                     <div key={index} className="col-md-6 col-sm-6 col-12 mb-4">
                         <FeaturedProduct
                             id={p.id}
                             name={p.name}
                             price={p.price}
-                            ingredients={p.ingredients}
+                            detail={p.detail}
                             image={p.image}
                             category={p.category}
                         />

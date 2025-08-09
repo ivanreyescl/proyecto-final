@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [user, setUser] = useState({ email: '', password: '' })
@@ -9,10 +10,8 @@ const Login = () => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-    const returnAlert = (message) => {
-        alert(message)
-        return
-    };
+    const returnAlert = (message) => toast.error(message, { autoClose: 2000 });
+    const returnSuccess = (message) => toast.success(message, { autoClose: 2000 });
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -26,7 +25,7 @@ const Login = () => {
             const isAuthenticated = await auth(email, password)
 
             if (isAuthenticated) {
-                returnAlert(`Se ha iniciado sesión con el usuario ${email.split('@')[0].trim()}`)
+                returnSuccess(`Se ha iniciado sesión con el usuario ${email.split('@')[0].trim()}`)
                 setUser({ email: '', password: '' })
             }
         }

@@ -1,9 +1,9 @@
-import Product from "../components/Product"
+import ProductForm from "../components/ProductForm"
 
 const Home = () => {  
     return (
         <>
-            <Product/>
+            <ProductForm/>
         </>
     )
 }

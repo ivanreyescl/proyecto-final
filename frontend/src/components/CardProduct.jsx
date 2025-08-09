@@ -3,20 +3,15 @@ import { CartContext } from "../context/CartContext"
 import { Link } from 'react-router-dom';
 import Button from './Button'
 import "./CardProduct.css"
+import { useAddToCart } from "../hooks/addToCart";
 
 const CardProduct = ({ id, name, price, image, detail, category }) => {
-  const { addToCart } = useContext(CartContext)
-
-  const handleAddToCart = () => {
-    console.log(id, name)
-    const ProductToAdd = { id, name, price, image, detail, category }
-    addToCart(ProductToAdd)
-  }
+  const addToCartHandler = useAddToCart();
   const formattedPrice = price.toLocaleString()
   const capitalizedName = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 
   return (
-    <div className="card shadow-sm">
+    <div className="card cardproduct shadow-sm">
       <Link to={`/product/${id}`}>
         <img
           src={image}
@@ -39,66 +34,20 @@ const CardProduct = ({ id, name, price, image, detail, category }) => {
           <hr />
             <Button 
               label="Agregar al carrito" 
-              onClick={() => {
-                handleAddToCart()
-                alert("Product " + name + " agregada con éxito")
-              }}
+              onClick={() => addToCartHandler({ id, name, price, image, detail, category })}
             />
         </div>
     </div>
   )
 }
-
-
-const FeaturedProduct = ({ id, name, price, image, description, category }) => {
-  const { addToCart } = useContext(CartContext)
-
-  const handleAddToCart = () => {
-    const ProductToAdd = { id, name, price, image, description, category }
-    addToCart(ProductToAdd)
-  }
-  return (
-    <div className="card shadow-sm">
-      <Link to={`/product/${id}`}>
-        <img
-          src={image}
-          className="card-img-top"
-          alt={name}
-        />
-      </Link>    
-        <div className="card-body">
-          <div className="d-flex justify-content-between">
-            <Button 
-              label="Ver más" 
-              link={`/product/${id}`}
-            />
-            <Button 
-              label="Agregar al carrito" 
-              onClick={() => {
-                handleAddToCart()
-                alert("Product " + name + " agregada con éxito")
-              }}
-            />
-          </div>
-        </div>
-    </div>
-  )
-}
-
 
 const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
-  const { addToCart } = useContext(CartContext)
-
-  const handleAddToCart = () => {
-    console.log(id, name)
-    const ProductToAdd = { id, name, price, image, detail, category }
-    addToCart(ProductToAdd)
-  }
   const formattedPrice = price.toLocaleString()
   const capitalizedName = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+  const addToCartHandler = useAddToCart();
 
   return (
-    <div className="card shadow-sm">
+    <div className="card cardproduct shadow-sm">
       <h5 className="text-center card-title fw-bold fs-2">{capitalizedName}</h5>
       <hr />
         <div className="card-text d-flex flex-column justify-content-center align-items-center">
@@ -120,17 +69,27 @@ const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
             <strong> ${formattedPrice} CLP</strong>
           </p>
           <hr />
+          <div className="container mt-5 d-flex justify-content-between align-items-center">
             <Button 
-              label="Agregar al carrito" 
-              onClick={() => {
-                handleAddToCart()
-                alert("Product " + name + " agregada con éxito")
-              }}
+              label="Agregar al carrito"
+              icon="fa fa-cart-plus" 
+              onClick={() => addToCartHandler({ id, name, price, image, detail, category })}
             />
+            {/* TODO: Este botón SOLO debe estar disponible para administradores */}
+            <Link to={`/products/edit/${id}`}>
+                <Button 
+                    icon="fa fa-cog"
+                    label="Modificar Producto" 
+                />
+            </Link>
+            <Link to="/products">
+                <Button label="Volver" icon="fa fa-arrow-left" />
+            </Link> 
+          </div>  
         </div>
     </div>
   )
 }
 
 export default CardProduct
-export { FeaturedProduct, CardProductDetailed }
+export { CardProductDetailed }

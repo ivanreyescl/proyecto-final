@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { UserContext } from '../context/UserContext';
 
 const Register = () => {
@@ -16,7 +17,7 @@ const Register = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     };
 
-    const returnAlert = (message) => alert(message)
+    const returnAlert = (message) => toast.error(message, { autoClose: 2000 });
 
     const handleSubmit = async (e) => {
         e.preventDefault();

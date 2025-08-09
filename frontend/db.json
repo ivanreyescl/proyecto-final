@@ -30,184 +30,184 @@
   ],
   "products": [
     {
-      "id": 1,
-      "name": "Procesador AMD Ryzen 5 5600X",
-      "price": 189990,
-      "category": "Procesadores",
-      "detail": "6 núcleos, 12 hilos, socket AM4",
-      "stock": 15,
-      "image": "https://media.solotodo.com/media/products/1264967_picture_1672268308.jpg"
+        "id": 1,
+        "name": "Procesador AMD Ryzen 5 5600X",
+        "price": 189990,
+        "category": "Procesadores",
+        "stock": 15,
+        "image": "https://media.solotodo.com/media/products/1264967_picture_1672268308.jpg",
+        "detail": "Procesador AMD Ryzen 5 5600X con 6 núcleos y 12 hilos basado en arquitectura Zen 3. Ideal para gaming y productividad media, gracias a su eficiencia y alto rendimiento en tareas multitarea y juegos exigentes."
     },
     {
-      "id": 2,
-      "name": "Procesador AMD Ryzen 7 5800X3D",
-      "price": 349990,
-      "category": "Procesadores",
-      "detail": "8 núcleos, 16 hilos, 3D V-Cache",
-      "stock": 10,
-      "image": "https://media.solotodo.com/media/products/1570382_picture_1672268384.jpg"
+        "id": 2,
+        "name": "Procesador AMD Ryzen 7 5800X3D",
+        "price": 349990,
+        "category": "Procesadores",
+        "stock": 10,
+        "image": "https://media.solotodo.com/media/products/1570382_picture_1672268384.jpg",
+        "detail": "Procesador AMD Ryzen 7 5800X3D con 8 núcleos y 16 hilos, equipado con tecnología 3D V-Cache que mejora significativamente el rendimiento en juegos y aplicaciones intensivas en caché. Perfecto para usuarios exigentes y gaming de alto nivel."
     },
     {
-      "id": 3,
-      "name": "Procesador Intel Core i5-12400F",
-      "price": 179990,
-      "category": "Procesadores",
-      "detail": "6 núcleos, 12 hilos, socket LGA1700",
-      "stock": 20,
-      "image": "https://http2.mlstatic.com/D_Q_NP_2X_898372-CBT79593721017_092024-T.webp"
+        "id": 3,
+        "name": "Procesador Intel Core i5-12400F",
+        "price": 179990,
+        "category": "Procesadores",
+        "stock": 20,
+        "image": "https://http2.mlstatic.com/D_Q_NP_2X_898372-CBT79593721017_092024-T.webp",
+        "detail": "Procesador Intel Core i5-12400F con 6 núcleos y 12 hilos. Cuenta con la arquitectura Alder Lake para un balance ideal entre consumo y rendimiento, recomendado para tareas de oficina, multimedia y gaming casual."
     },
     {
-      "id": 4,
-      "name": "Procesador Intel Core i7-13700K",
-      "price": 469990,
-      "category": "Procesadores",
-      "detail": "16 núcleos, 24 hilos, socket LGA1700",
-      "stock": 8,
-      "image": "https://media.solotodo.com/media/products/1648741_picture_1664520596.jpg"
+        "id": 4,
+        "name": "Procesador Intel Core i7-13700K",
+        "price": 469990,
+        "category": "Procesadores",
+        "stock": 8,
+        "image": "https://media.solotodo.com/media/products/1648741_picture_1664520596.jpg",
+        "detail": "Procesador Intel Core i7-13700K con 16 núcleos y 24 hilos, basado en arquitectura Raptor Lake. Ofrece alto rendimiento para gaming extremo, creación de contenido y multitarea intensiva, soportando overclocking para entusiastas."
     },
     {
-      "id": 5,
-      "name": "Procesador AMD Ryzen 9 7950X",
-      "price": 699990,
-      "category": "Procesadores",
-      "detail": "16 núcleos, 32 hilos, AM5",
-      "stock": 5,
-      "image": "https://media.solotodo.com/media/products/1647114_picture_1672267314.jpg"
+        "id": 5,
+        "name": "Procesador AMD Ryzen 9 7950X",
+        "price": 699990,
+        "category": "Procesadores",
+        "stock": 5,
+        "image": "https://media.solotodo.com/media/products/1647114_picture_1672267314.jpg",
+        "detail": "Procesador AMD Ryzen 9 7950X con 16 núcleos y 32 hilos, arquitectura Zen 4 y socket AM5. Excelente para cargas profesionales, edición 4K, renderizado y juegos en ultra calidad. Alto rendimiento y eficiencia energética."
     },
     {
-      "id": 6,
-      "name": "Tarjeta Gráfica NVIDIA GeForce RTX 3060 Ti",
-      "price": 379990,
-      "category": "GPU",
-      "detail": "8GB GDDR6, ray tracing",
-      "stock": 12,
-      "image": "https://media.solotodo.com/media/products/1434952_picture_1628193033.png"
+        "id": 6,
+        "name": "Tarjeta Gráfica NVIDIA GeForce RTX 3060 Ti",
+        "price": 379990,
+        "category": "GPU",
+        "stock": 12,
+        "image": "https://media.solotodo.com/media/products/1434952_picture_1628193033.png",
+        "detail": "GPU NVIDIA RTX 3060 Ti con 8GB de memoria GDDR6 y soporte para ray tracing en tiempo real. Ideal para gaming Full HD y producción multimedia con alta eficiencia energética."
     },
     {
-      "id": 7,
-      "name": "Tarjeta Gráfica NVIDIA GeForce RTX 4070",
-      "price": 629990,
-      "category": "GPU",
-      "detail": "12GB GDDR6X, ray tracing",
-      "stock": 7,
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0S6JGJYaSTSkpnflAwKBAyvwpA37LBRehCA&s"
+        "id": 7,
+        "name": "Tarjeta Gráfica NVIDIA GeForce RTX 4070",
+        "price": 629990,
+        "category": "GPU",
+        "stock": 7,
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0S6JGJYaSTSkpnflAwKBAyvwpA37LBRehCA&s",
+        "detail": "GPU NVIDIA RTX 4070 con 12GB GDDR6X, arquitectura Ada Lovelace y trazado de rayos avanzado. Pensada para gaming 1440p y tareas creativas con gran rendimiento y eficiencia."
     },
     {
-      "id": 8,
-      "name": "Tarjeta Gráfica AMD Radeon RX 6700 XT",
-      "price": 449990,
-      "category": "GPU",
-      "detail": "12GB GDDR6, RDNA 2",
-      "stock": 9,
-      "image": "https://media.solotodo.com/media/products/1383214_picture_1619854158.png"
+        "id": 8,
+        "name": "Tarjeta Gráfica AMD Radeon RX 6700 XT",
+        "price": 449990,
+        "category": "GPU",
+        "stock": 9,
+        "image": "https://media.solotodo.com/media/products/1383214_picture_1619854158.png",
+        "detail": "GPU AMD RX 6700 XT con 12GB GDDR6 y arquitectura RDNA 2. Excelente para gaming 1440p con alta tasa de frames y eficiencia en consumo energético."
     },
     {
-      "id": 9,
-      "name": "Tarjeta Gráfica AMD Radeon RX 7900 XT",
-      "price": 949990,
-      "category": "GPU",
-      "detail": "20GB GDDR6, RDNA 3",
-      "stock": 4,
-      "image": "https://media.solotodo.com/media/products/1686490_picture_1671770393.png"
+        "id": 9,
+        "name": "Tarjeta Gráfica AMD Radeon RX 7900 XT",
+        "price": 949990,
+        "category": "GPU",
+        "stock": 4,
+        "image": "https://media.solotodo.com/media/products/1686490_picture_1671770393.png",
+        "detail": "GPU AMD RX 7900 XT con 20GB GDDR6 y arquitectura RDNA 3. Diseñada para gaming 4K y cargas gráficas intensivas, con mejoras en trazado de rayos y eficiencia energética."
     },
     {
-      "id": 10,
-      "name": "Tarjeta Gráfica NVIDIA GeForce RTX 4090",
-      "price": 2299990,
-      "category": "GPU",
-      "detail": "24GB GDDR6X, ray tracing",
-      "stock": 3,
-      "image": "https://media.solotodo.com/media/products/1667389_picture_1668513364.png"
+        "id": 10,
+        "name": "Tarjeta Gráfica NVIDIA GeForce RTX 4090",
+        "price": 2299990,
+        "category": "GPU",
+        "stock": 3,
+        "image": "https://media.solotodo.com/media/products/1667389_picture_1668513364.png",
+        "detail": "GPU NVIDIA RTX 4090 con 24GB GDDR6X, arquitectura Ada Lovelace y soporte avanzado para ray tracing. Ideal para gaming 4K extremo, creación de contenido profesional y tareas de IA."
     },
     {
-      "id": 11,
-      "name": "Memoria RAM Corsair Vengeance LPX 16GB (2x8GB) DDR4 3200MHz",
-      "price": 64990,
-      "category": "RAM",
-      "detail": "DDR4, CL16",
-      "stock": 25,
-      "image": "https://http2.mlstatic.com/D_NQ_NP_896493-MLA45377366267_032021-O-memoria-ram-corsair-vengeance-lpx-16gb-2x8gb-3200mhz.webp"
+        "id": 11,
+        "name": "Memoria RAM Corsair Vengeance LPX 16GB (2x8GB) DDR4 3200MHz",
+        "price": 64990,
+        "category": "RAM",
+        "stock": 25,
+        "image": "https://http2.mlstatic.com/D_NQ_NP_896493-MLA45377366267_032021-O-memoria-ram-corsair-vengeance-lpx-16gb-2x8gb-3200mhz.webp",
+        "detail": "Kit de memoria RAM Corsair Vengeance LPX DDR4 a 3200MHz con latencia CL16. Ideal para equipos de escritorio gaming y edición que requieren velocidad estable y buen rendimiento."
     },
     {
-      "id": 12,
-      "name": "Memoria RAM G.Skill Trident Z RGB 32GB (2x16GB) DDR4 3600MHz",
-      "price": 129990,
-      "category": "RAM",
-      "detail": "DDR4, CL16, RGB",
-      "stock": 14,
-      "image": "https://media.spdigital.cl/thumbnails/products/s7b16wqx_e4d8e7d3_thumbnail_512.png"
+        "id": 12,
+        "name": "Memoria RAM G.Skill Trident Z RGB 32GB (2x16GB) DDR4 3600MHz",
+        "price": 129990,
+        "category": "RAM",
+        "stock": 14,
+        "image": "https://media.spdigital.cl/thumbnails/products/s7b16wqx_e4d8e7d3_thumbnail_512.png",
+        "detail": "Memoria RAM G.Skill Trident Z RGB DDR4 a 3600MHz con latencia CL16 y iluminación RGB. Perfecta para PC gaming de alto rendimiento y configuraciones estéticas personalizadas."
     },
     {
-      "id": 13,
-      "name": "Memoria RAM Kingston Fury Beast 8GB DDR4 3200MHz",
-      "price": 29990,
-      "category": "RAM",
-      "detail": "DDR4, CL16",
-      "stock": 40,
-      "image": "https://media.solotodo.com/media/products/1437078_picture_1628627252.jpg"
+        "id": 13,
+        "name": "Memoria RAM Kingston Fury Beast 8GB DDR4 3200MHz",
+        "price": 29990,
+        "category": "RAM",
+        "stock": 40,
+        "image": "https://media.solotodo.com/media/products/1437078_picture_1628627252.jpg",
+        "detail": "Memoria RAM Kingston Fury Beast DDR4 a 3200MHz con latencia CL16. Buena opción para actualizar equipos básicos o medianos con buen rendimiento en tareas cotidianas."
     },
     {
-      "id": 14,
-      "name": "Memoria RAM Corsair Vengeance RGB Pro 64GB (2x32GB) DDR4 3600MHz",
-      "price": 279990,
-      "category": "RAM",
-      "detail": "DDR4, CL18, RGB",
-      "stock": 6,
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSzoMYNPBLC1g93sZnJ0K11W61g0dC5_V6Dg&s"
+        "id": 14,
+        "name": "Memoria RAM Corsair Vengeance RGB Pro 64GB (2x32GB) DDR4 3600MHz",
+        "price": 279990,
+        "category": "RAM",
+        "stock": 6,
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSzoMYNPBLC1g93sZnJ0K11W61g0dC5_V6Dg&s",
+        "detail": "Memoria RAM Corsair Vengeance RGB Pro DDR4 a 3600MHz con 64GB totales y latencia CL18, ideal para estaciones de trabajo, edición y gaming extremo con iluminación RGB personalizable."
     },
     {
-      "id": 15,
-      "name": "Memoria RAM Crucial Ballistix 16GB (2x8GB) DDR4 3600MHz",
-      "price": 74990,
-      "category": "RAM",
-      "detail": "DDR4, CL16",
-      "stock": 18,
-      "image": "https://media.solotodo.com/media/products/1112468_picture_1584622221.jpg"
+        "id": 15,
+        "name": "Memoria RAM Crucial Ballistix 16GB (2x8GB) DDR4 3600MHz",
+        "price": 74990,
+        "category": "RAM",
+        "stock": 18,
+        "image": "https://media.solotodo.com/media/products/1112468_picture_1584622221.jpg",
+        "detail": "Memoria RAM Crucial Ballistix DDR4 a 3600MHz con latencia CL16. Diseñada para rendimiento óptimo en juegos y aplicaciones que demandan alta velocidad de memoria."
     },
     {
-      "id": 16,
-      "name": "Procesador Intel Core i9-13900K",
-      "price": 729990,
-      "category": "Procesadores",
-      "detail": "24 núcleos, 32 hilos, LGA1700",
-      "stock": 5,
-      "image": "https://media.solotodo.com/media/products/1648670_picture_1664519640.jpg"
+        "id": 16,
+        "name": "Procesador Intel Core i9-13900K",
+        "price": 729990,
+        "category": "Procesadores",
+        "stock": 5,
+        "image": "https://media.solotodo.com/media/products/1648670_picture_1664519640.jpg",
+        "detail": "Procesador Intel Core i9-13900K con 24 núcleos y 32 hilos, arquitectura Raptor Lake. Ideal para gaming 4K, creación de contenido profesional y multitarea intensiva con capacidad de overclocking."
     },
     {
-      "id": 17,
-      "name": "Procesador AMD Ryzen 7 7700X",
-      "price": 419990,
-      "category": "Procesadores",
-      "detail": "8 núcleos, 16 hilos, AM5",
-      "stock": 9,
-      "image": "https://media.solotodo.com/media/products/1647092_picture_1672267311.jpg"
+        "id": 17,
+        "name": "Procesador AMD Ryzen 7 7700X",
+        "price": 419990,
+        "category": "Procesadores",
+        "stock": 9,
+        "image": "https://media.solotodo.com/media/products/1647092_picture_1672267311.jpg",
+        "detail": "Procesador AMD Ryzen 7 7700X con 8 núcleos y 16 hilos, arquitectura Zen 4 y socket AM5. Excelente rendimiento para juegos, edición y tareas multitarea avanzadas."
     },
     {
-      "id": 18,
-      "name": "Tarjeta Gráfica NVIDIA GeForce RTX 3080",
-      "price": 799990,
-      "category": "GPU",
-      "detail": "10GB GDDR6X, ray tracing",
-      "stock": 6,
-      "image": "https://media.solotodo.com/media/products/1278793_picture_1606622397.jpg"
+        "id": 18,
+        "name": "Tarjeta Gráfica NVIDIA GeForce RTX 3080",
+        "price": 799990,
+        "category": "GPU",
+        "stock": 6,
+        "image": "https://media.solotodo.com/media/products/1278793_picture_1606622397.jpg",
+        "detail": "GPU NVIDIA RTX 3080 con 10GB GDDR6X y soporte para ray tracing. Excelente para gaming 4K, realidad virtual y producción multimedia avanzada."
     },
     {
-      "id": 19,
-      "name": "Memoria RAM TeamGroup T-Force Delta RGB 32GB (2x16GB) DDR5 6000MHz",
-      "price": 229990,
-      "category": "RAM",
-      "detail": "DDR5, CL36, RGB",
-      "stock": 8,
-      "image": "https://http2.mlstatic.com/D_NQ_NP_971445-MLU70799869862_082023-O.webp"
+        "id": 19,
+        "name": "Memoria RAM TeamGroup T-Force Delta RGB 32GB (2x16GB) DDR5 6000MHz",
+        "price": 229990,
+        "category": "RAM",
+        "stock": 8,
+        "image": "https://http2.mlstatic.com/D_NQ_NP_971445-MLU70799869862_082023-O.webp",
+        "detail": "Memoria RAM TeamGroup T-Force Delta RGB DDR5 a 6000MHz con latencia CL36 e iluminación RGB. Ideal para equipos modernos que requieren máxima velocidad y estética personalizable."
     },
     {
-      "id": 20,
-      "name": "Memoria RAM Kingston Fury Beast 64GB (2x32GB) DDR5 5600MHz",
-      "price": 399990,
-      "category": "RAM",
-      "detail": "DDR5, CL40",
-      "stock": 4,
-      "image": "https://http2.mlstatic.com/D_NQ_NP_998623-MLU73080195403_112023-O.webp"
+        "id": 20,
+        "name": "Memoria RAM Kingston Fury Beast 64GB (2x32GB) DDR5 5600MHz",
+        "price": 399990,
+        "category": "RAM",
+        "stock": 4,
+        "image": "https://http2.mlstatic.com/D_NQ_NP_998623-MLU73080195403_112023-O.webp",
+        "detail": "Memoria RAM Kingston Fury Beast DDR5 a 5600MHz con latencia CL40, ideal para estaciones de trabajo y sistemas de alto rendimiento que necesitan gran capacidad y velocidad."
     }
   ]
 }

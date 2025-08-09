@@ -208,15 +208,6 @@
       "detail": "DDR5, CL40",
       "stock": 4,
       "image": "https://http2.mlstatic.com/D_NQ_NP_998623-MLU73080195403_112023-O.webp"
-    },
-    {
-      "id": "28c2",
-      "name": "23",
-      "detail": "2w33",
-      "code": "",
-      "price": "333",
-      "image": "https://picsum.photos/200/300?random=835",
-      "category": "Procesadores"
     }
   ]
 }

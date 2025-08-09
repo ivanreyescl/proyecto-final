@@ -20,7 +20,7 @@ const ProductsProvider = ({ children }) => {
     }
     }
     
-    // TODO: Estas acciones las debe manejar el backend
+    // TODO: Estas acciones las debe manejar el backend, solo se agregaron para mostrar el funcionamiento de las vistas.
     const register = async ({ name, detail, code, price, image, category }) => {
         // TODO: Se debe habilitar el registro de imágenes en una nube, de momento arroja una imagen random
         image = "https://picsum.photos/200/300?random=" + Math.floor(Math.random() * 1000);

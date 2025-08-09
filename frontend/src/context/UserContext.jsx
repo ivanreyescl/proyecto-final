@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
 
     const register = async (email, firstName, lastName, password) => {
         try {
-            const URL = 'http://localhost:5000/api/auth/register'
+            const URL = 'http://localhost:5000/register'
             const { data } = await axios.post(URL, { email, firstName, lastName, password })
             setToken(data.accessToken)
             setEmail(data.email)
@@ -55,7 +55,7 @@ export const UserProvider = ({ children }) => {
     const profile = async () => {
         const token = localStorage.getItem('token')
         try {
-            const { data } = await axios.get('http://localhost:5000/api/auth/me', {
+            const { data } = await axios.get('http://localhost:5000/me', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setUser(data)

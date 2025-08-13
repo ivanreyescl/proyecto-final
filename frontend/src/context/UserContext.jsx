@@ -1,7 +1,8 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-    
+import { urlBaseServer } from "../server_config";
+
 const returnAlert = (message) => toast.error(message, { autoClose: 2000 });
 const returnSuccess = (message) => toast.success(message, { autoClose: 2000 });
 
@@ -16,7 +17,7 @@ export const UserProvider = ({ children }) => {
 
     const auth = async (email, password) => {
         try {
-            const URL = 'http://localhost:5000/login';
+            const URL = `${urlBaseServer}/login`;
             const { data } = await axios.post(URL, { email, password })
             setToken(data.accessToken)
             setEmail(data.email)
@@ -31,7 +32,7 @@ export const UserProvider = ({ children }) => {
 
     const register = async (email, firstName, lastName, password) => {
         try {
-            const URL = 'http://localhost:5000/register'
+            const URL = `${urlBaseServer}/register`;
             const { data } = await axios.post(URL, { email, firstName, lastName, password })
             setToken(data.accessToken)
             setEmail(data.email)
@@ -60,7 +61,7 @@ export const UserProvider = ({ children }) => {
     const profile = async () => {
         const token = localStorage.getItem('token')
         try {
-            const { data } = await axios.get('http://localhost:5000/me', {
+            const { data } = await axios.get(`${urlBaseServer}/me`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setUser(data)

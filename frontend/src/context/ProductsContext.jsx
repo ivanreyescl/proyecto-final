@@ -1,17 +1,19 @@
 import { useEffect, useState, createContext } from "react"
+import { urlBaseServer } from "../server_config";
+
 
 export const ProductContext = createContext()  
 
 const ProductsProvider = ({ children }) => {
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
-    const ENV_URL = 'http://localhost:5000/products'
+    const ENV_URL = `${urlBaseServer}/products`
 
     const fetchProductsFromApi = async () => {
     try {
         const response = await fetch(ENV_URL)
         const data = await response.json()
-        const normalizedData = Array.isArray(data[0]) ? data[0] : data
+        const normalizedData = data.products
         setProduct(normalizedData)
     } catch (error) {
         console.error(error)

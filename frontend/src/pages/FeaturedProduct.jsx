@@ -3,6 +3,7 @@ import FeaturedProduct  from "../components/FeaturedProduct"
 import { ProductContext } from "../context/ProductsContext"
 
 function shuffleArray(array) {
+if (!Array.isArray(array)) return [];
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

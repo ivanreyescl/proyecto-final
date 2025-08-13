@@ -6,82 +6,108 @@ import { urlBaseServer } from "../server_config";
 const returnAlert = (message) => toast.error(message, { autoClose: 2000 });
 const returnSuccess = (message) => toast.success(message, { autoClose: 2000 });
 
-
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [token, setToken] = useState(localStorage.getItem('token') || '')
-    const [email, setEmail] = useState(localStorage.getItem('email') || '')
-    const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '')
-    const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '')
+    const [token, setToken] = useState(localStorage.getItem('token') || '');
+    const [email, setEmail] = useState(localStorage.getItem('email') || '');
+    const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
+    const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '');
+    const [role, setRole] = useState(localStorage.getItem('role') || '');
 
     const auth = async (email, password) => {
         try {
             const URL = `${urlBaseServer}/login`;
-            const { data } = await axios.post(URL, { email, password })
-            setToken(data.accessToken)
-            setEmail(data.email)
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('email', data.email)
-            return true
+            const { data } = await axios.post(URL, { email, password });
+
+            // json-server-auth devuelve: accessToken y user
+            setToken(data.accessToken);
+            setEmail(data.user.email);
+            setFirstName(data.user.firstName || '');
+            setLastName(data.user.lastName || '');
+            setRole(data.user.role || '');
+
+            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('email', data.user.email);
+            localStorage.setItem('firstName', data.user.firstName || '');
+            localStorage.setItem('lastName', data.user.lastName || '');
+            localStorage.setItem('role', data.user.role || '');
+
+            return true;
         } catch (error) {
-            returnAlert(error.response?.data?.message || 'Error en la autenticación')
-            return false
+            returnAlert(error.response?.data || 'Error en la autenticación');
+            return false;
         }
     };
 
     const register = async (email, firstName, lastName, password) => {
         try {
             const URL = `${urlBaseServer}/register`;
-            const { data } = await axios.post(URL, { email, firstName, lastName, password })
-            setToken(data.accessToken)
-            setEmail(data.email)
-            setFirstName(data.firstName)
-            setLastName(data.lastName)
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('email', data.email)
-            localStorage.setItem('firstName', data.firstName)
-            localStorage.setItem('lastName', data.lastName)
-            returnSuccess('Usuario registrado exitosamente, se ha iniciado sesión automaticamente.')
-            return true
+            const { data } = await axios.post(URL, { email, firstName, lastName, password });
+
+            setToken(data.accessToken);
+            setEmail(data.user.email);
+            setFirstName(data.user.firstName || '');
+            setLastName(data.user.lastName || '');
+            setRole(data.user.role || '');
+
+            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('email', data.user.email);
+            localStorage.setItem('firstName', data.user.firstName || '');
+            localStorage.setItem('lastName', data.user.lastName || '');
+            localStorage.setItem('role', data.user.role || '');
+
+            returnSuccess('Usuario registrado exitosamente, sesión iniciada automáticamente.');
+            return true;
         } catch (error) {
-            returnAlert(error.response?.data?.message || 'Error al registrar el usuario')
-            return false
+            returnAlert(error.response?.data || 'Error al registrar el usuario');
+            return false;
         }
     };
 
     const logout = () => {
-        setToken('')
-        setEmail('')
-        localStorage.removeItem('token')
-        localStorage.removeItem('email')
-        returnSuccess('Se ha cerrado sesión')
-    }
+        setToken('');
+        setEmail('');
+        setFirstName('');
+        setLastName('');
+        setRole('');
+        localStorage.removeItem('token');
+        localStorage.removeItem('email');
+        localStorage.removeItem('firstName');
+        localStorage.removeItem('lastName');
+        localStorage.removeItem('role');
+        returnSuccess('Se ha cerrado sesión');
+    };
 
     const profile = async () => {
-        const token = localStorage.getItem('token')
+        const storedToken = localStorage.getItem('token');
         try {
             const { data } = await axios.get(`${urlBaseServer}/me`, {
-                headers: { Authorization: `Bearer ${token}` }
-            })
-            setUser(data)
-            return true
+                headers: { Authorization: `Bearer ${storedToken}` }
+            });
+
+            setEmail(data.email || '');
+            setFirstName(data.firstName || '');
+            setLastName(data.lastName || '');
+            return true;
         } catch (error) {
-            returnAlert(error.response?.data?.message || 'Error al obtener el perfil del usuario')
-            return false
+            returnAlert(error.response?.data || 'Error al obtener el perfil del usuario');
+            return false;
         }
-    }
+    };
 
     const setUserState = {
         token,
         email,
         firstName,
         lastName,
+        role,
         auth,
         register,
         profile,
         logout
-    }
+    };
+
     return (
         <UserContext.Provider value={setUserState}>
             {children}
@@ -89,4 +115,5 @@ export const UserProvider = ({ children }) => {
     );
 };
 
-export default UserProvider
+export default UserProvider;
+

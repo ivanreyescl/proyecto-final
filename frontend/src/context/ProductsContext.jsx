@@ -2,7 +2,7 @@ import { useEffect, useState, createContext } from "react"
 import { urlBaseServer } from "../server_config";
 
 
-export const ProductContext = createContext()  
+export const ProductContext = createContext()
 
 const ProductsProvider = ({ children }) => {
     const [product, setProduct] = useState(null)
@@ -20,8 +20,8 @@ const ProductsProvider = ({ children }) => {
     } finally {
         setLoading(false)
     }
-    }
-    
+}
+
     // TODO: Estas acciones las debe manejar el backend, solo se agregaron para mostrar el funcionamiento de las vistas.
     const register = async ({ name, detail, code, price, image, category }) => {
         // TODO: Se debe habilitar el registro de imágenes en una nube, de momento arroja una imagen random
@@ -37,7 +37,7 @@ const ProductsProvider = ({ children }) => {
             return true;
         } catch (error) {
             console.error(error);
-        return false;
+            return false;
         }
     };
 
@@ -47,11 +47,25 @@ const ProductsProvider = ({ children }) => {
 
         try {
             const response = await fetch(`${ENV_URL}/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedProduct),
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedProduct),
             });
             if (!response.ok) throw new Error('Error al actualizar');
+            await fetchProductsFromApi();
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    const deleteProduct = async (id) => {
+        try {
+            const response = await fetch(`${ENV_URL}/${id}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) throw new Error('Error al eliminar el producto');
             await fetchProductsFromApi();
             return true;
         } catch (error) {
@@ -66,7 +80,14 @@ const ProductsProvider = ({ children }) => {
     }, [])
 
     return (
-        <ProductContext.Provider value={{ product, loading, fetchProductsFromApi, register, update }}>
+        <ProductContext.Provider value={{
+            product,
+            loading,
+            fetchProductsFromApi,
+            register,
+            update,
+            deleteProduct
+        }}>
             {children}
         </ProductContext.Provider>
     )

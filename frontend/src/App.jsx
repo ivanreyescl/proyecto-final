@@ -16,7 +16,6 @@ import UserProvider from './context/UserContext'
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ProductsForms from './components/ProductForm.jsx';
 
-
 const App = () => {
   return (
     <>

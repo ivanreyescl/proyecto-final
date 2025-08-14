@@ -1,25 +1,300 @@
-import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { UserContext } from '../context/UserContext'
+import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import { ProductContext } from '../context/ProductsContext';
+import Button from '../components/Button';
 
 const Profile = () => {
+    const { firstName, lastName, role, logout } = useContext(UserContext);
+    const { deleteProduct } = useContext(ProductContext);
+    const [favorites, setFavorites] = useState([]);
+    const [purchases, setPurchases] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const { email } = useContext(UserContext)
+    // --- Admin state ---
+    const [adminProducts, setAdminProducts] = useState([]);
+    const [adminLoading, setAdminLoading] = useState(true);
+    const navigate = useNavigate();
 
-    const { logout } = useContext(UserContext)
+    useEffect(() => {
+        if (role === 'user') {
+            const fetchUserData = async () => {
+                try {
+                    setLoading(true);
+                    const response = await fetch('http://localhost:5000/users');
+                    const users = await response.json();
+                    const user = users.find(u => u.firstName === firstName && u.lastName === lastName);
 
-    const handleLogout = () => {
-        logout()
-        localStorage.removeItem('token')
-        localStorage.removeItem('email')
+                    if (user) {
+                        const productsResponse = await fetch('http://localhost:5000/products');
+                        const products = await productsResponse.json();
+                        setFavorites(products.filter(p => user.favorites?.includes(p.id)));
+                        setPurchases(products.filter(p => user.purchases?.includes(p.id)));
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            fetchUserData();
+        }
+    }, [role, firstName, lastName]);
+
+    // --- Fetch all products for admin view ---
+    useEffect(() => {
+        if (role === 'admin') {
+            const fetchAllProducts = async () => {
+                try {
+                    setAdminLoading(true);
+                    const response = await fetch('http://localhost:5000/products');
+                    const products = await response.json();
+                    const normalized = Array.isArray(products[0]) ? products[0] : products;
+                    setAdminProducts(normalized);
+                } catch (error) {
+                    console.error("Error fetching products for admin:", error);
+                } finally {
+                    setAdminLoading(false);
+                }
+            };
+            fetchAllProducts();
+        }
+    }, [role]);
+
+    const handleDeleteProduct = async (id) => {
+        const confirmed = window.confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.');
+        if (!confirmed) return;
+
+        try {
+            const success = await deleteProduct(id);
+            if (success) {
+                setAdminProducts(prev => prev.filter(p => p.id !== id));
+            } else {
+                alert('No se pudo eliminar el producto');
+            }
+        } catch (error) {
+            console.error('Error al eliminar producto:', error);
+            alert('No se pudo eliminar el producto. Revisa la consola.');
+        }
+    };
+
+    const handleEditProduct = (id) => {
+        navigate(`/products/${id}`);
+    };
+
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('es-CL', {
+            style: 'currency',
+            currency: 'CLP',
+            minimumFractionDigits: 0
+        }).format(price);
     };
 
     return (
-        <div className="container mt-5 d-flex justify-content-center">
-            <div className="text-center">
-                <h2>Perfil de Usuario</h2>
-                <p>Email: {email ? email : 'N/A' }</p>
-                <Link to="/" className="btn btn-danger" onClick={handleLogout}>Cerrar Sesión</Link>
+        <div className="container py-4">
+            {/* Header */}
+            <div className="row mb-4">
+                <div className="col">
+                    <div className="p-4 bg-primary bg-gradient text-white rounded-3 shadow">
+                        <h1 className="display-6 mb-0">
+                            <i className="bi bi-person-circle me-2"></i>
+                            ¡Bienvenido {firstName} {lastName}!
+                        </h1>
+                    </div>
+                </div>
+            </div>
+
+            {/* Admin Panel */}
+            {role === 'admin' && (
+                <>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <Link to={`/products/new`}>
+                            <Button label="Agregar Producto" icon="fa fa-plus" />
+                        </Link>
+                    </div>
+
+                    <div className="card shadow-sm">
+                        <div className="card-header">
+                            <h5 className="mb-0">Productos registrados</h5>
+                        </div>
+                        <div className="card-body">
+                            {adminLoading ? (
+                                <div className="text-center py-4">
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            ) : adminProducts.length === 0 ? (
+                                <div className="text-center py-4">
+                                    <p className="mb-0">No hay productos registrados.</p>
+                                </div>
+                            ) : (
+                                <div className="list-group">
+                                    {adminProducts.map(prod => (
+                                        <div key={prod.id} className="list-group-item d-flex align-items-center justify-content-between">
+                                            <div className="d-flex align-items-center gap-3">
+                                                <img
+                                                    src={prod.image}
+                                                    alt={prod.name}
+                                                    style={{ width: 64, height: 64, objectFit: 'contain', borderRadius: 6 }}
+                                                    className="bg-light p-1"
+                                                />
+                                                <div>
+                                                    <div className="fw-semibold">{prod.name}</div>
+                                                    <small className="text-muted">{prod.category} • {formatPrice(prod.price)}</small>
+                                                </div>
+                                            </div>
+
+                                            <div className="d-flex gap-2 align-items-center">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-primary"
+                                                    onClick={() => handleEditProduct(prod.id)}
+                                                >
+                                                    Editar
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-danger"
+                                                    onClick={() => handleDeleteProduct(prod.id)}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </>
+            )}
+
+            {/* User content */}
+            {role === 'user' && (
+                <>
+                    {/* Favoritos */}
+                    <div className="row mb-4">
+                        <div className="col">
+                            <div className="card shadow-sm">
+                                <div className="card-header bg-danger bg-opacity-10">
+                                    <h2 className="h5 mb-0 text-danger">
+                                        <i className="bi bi-heart-fill me-2"></i>
+                                        Tus Favoritos
+                                    </h2>
+                                </div>
+                                <div className="card-body">
+                                    {loading ? (
+                                        <div className="text-center py-5">
+                                            <div className="spinner-border text-danger" role="status">
+                                                <span className="visually-hidden">Cargando...</span>
+                                            </div>
+                                            <p className="mt-2">Cargando tus favoritos...</p>
+                                        </div>
+                                    ) : favorites.length > 0 ? (
+                                        <div className="row">
+                                            {favorites.map(product => (
+                                                <div key={product.id} className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+                                                    <div className="card h-100 border-0 shadow-hover">
+                                                        <div className="position-absolute top-0 end-0 m-2">
+                                                            <span className="badge bg-dark">{product.category}</span>
+                                                        </div>
+                                                        <div className="ratio ratio-1x1 bg-light">
+                                                            <img src={product.image} className="card-img-top p-3 img-contain" alt={product.name} />
+                                                        </div>
+                                                        <div className="card-body d-flex flex-column">
+                                                            <h5 className="card-title fs-6 text-truncate">{product.name}</h5>
+                                                            <p className="card-text small text-muted mb-2 line-clamp-2">{product.detail}</p>
+                                                            <div className="mt-auto">
+                                                                <h4 className="text-primary fw-bold mb-2">{formatPrice(product.price)}</h4>
+                                                                <div className="d-flex justify-content-between align-items-center">
+                                                                    <span className={`badge ${product.stock > 0 ? 'bg-success' : 'bg-secondary'}`}>
+                                                                        {product.stock > 0 ? `Disponible: ${product.stock}` : 'Agotado'}
+                                                                    </span>
+                                                                    <Link to={`/product/${product.id}`} className="btn btn-sm btn-outline-primary stretched-link">
+                                                                        Ver Detalles
+                                                                    </Link>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-5">
+                                            <i className="bi bi-heart text-danger" style={{ fontSize: '3rem' }}></i>
+                                            <h4 className="mt-3">No tienes favoritos aún</h4>
+                                            <p className="text-muted">Guarda tus productos favoritos para verlos aquí</p>
+                                            <Link to="/productos" className="btn btn-danger mt-2">
+                                                Explorar Productos
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Purchases */}
+                    <div className="row">
+                        <div className="col">
+                            <div className="card shadow-sm">
+                                <div className="card-header bg-success bg-opacity-10">
+                                    <h2 className="h5 mb-0 text-success">
+                                        <i className="bi bi-bag-check me-2"></i>
+                                        Tus Compras
+                                    </h2>
+                                </div>
+                                <div className="card-body">
+                                    {loading ? (
+                                        <div className="text-center py-5">
+                                            <div className="spinner-border text-success" role="status">
+                                                <span className="visually-hidden">Cargando...</span>
+                                            </div>
+                                            <p className="mt-2">Cargando tu historial...</p>
+                                        </div>
+                                    ) : purchases.length > 0 ? (
+                                        <div className="row">
+                                            {purchases.map(product => (
+                                                <div key={product.id} className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+                                                    <div className="card h-100 border-0 shadow-sm">
+                                                        <div className="ratio ratio-1x1 bg-light">
+                                                            <img src={product.image} className="card-img-top p-3 img-contain" alt={product.name} />
+                                                        </div>
+                                                        <div className="card-body text-center">
+                                                            <h5 className="card-title fs-6 text-truncate">{product.name}</h5>
+                                                            <h4 className="text-success fw-bold">{formatPrice(product.price)}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-5">
+                                            <i className="bi bi-cart-x text-muted" style={{ fontSize: '3rem' }}></i>
+                                            <h4 className="mt-3">No tienes compras registradas</h4>
+                                            <p className="text-muted">Tus compras aparecerán aquí</p>
+                                            <Link to="/productos" className="btn btn-success mt-2">
+                                                Ver Catálogo
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
+
+            {/* Logout */}
+            <div className="row mt-4">
+                <div className="col text-center">
+                    <button onClick={logout} className="btn btn-outline-danger px-4 py-2">
+                        Cerrar Sesión
+                    </button>
+                </div>
             </div>
         </div>
     );

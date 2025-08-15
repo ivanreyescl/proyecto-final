@@ -45,7 +45,7 @@ CREATE TABLE Products (
 INSERT INTO Categories (name) VALUES
     ('Procesadores'),
     ('GPU'),
-    ('RAM')
+    ('RAM');
 
 -- Tabla UserRoles
 CREATE TABLE UserRoles (

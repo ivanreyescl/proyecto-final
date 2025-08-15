@@ -30,13 +30,12 @@ const Register = () => {
         } else if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
             return returnAlert('Por favor rellena todos los campos')
         } else {
-            return returnAlert('Usuario registrado') //Alert provisional, el siguiente comentario se aplica al tener backend
-/*             const isRegistered = await register(email, firstName, lastName, password)
+            const isRegistered = await register(email, firstName, lastName, password)
 
             if (isRegistered) {
                 setUser({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' })
                 window.location.href = '/'
-            } */
+            }
         }
     };
 

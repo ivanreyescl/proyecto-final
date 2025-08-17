@@ -20,7 +20,7 @@ export const useAddToFavorite = () => {
         throw new Error('Error al dar like al producto');
       }
 
-      toggleFavorite(product); // sincronizamos con el contexto
+      toggleFavorite(product);
       toast.success('Producto agregado a favoritos');
     } catch (error) {
       toast.error('No se pudo agregar a favoritos');

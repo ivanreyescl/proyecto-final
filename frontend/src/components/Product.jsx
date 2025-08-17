@@ -31,7 +31,7 @@ const Product = () => {
                     ingredients={selectedProduct.ingredients}
                     image={selectedProduct.image}
                     detail={selectedProduct.detail}
-                    category={selectedProduct.category}
+                    category={selectedProduct.category_name}
                 />
                 </div>
             </div>
@@ -55,7 +55,7 @@ const Product = () => {
                 <div className="row">
                     {product &&
                     [...product]
-                        .sort((a, b) => a.category.localeCompare(b.category))
+                        .sort((a, b) => a.category_name.localeCompare(b.category))
                         .map((p, index) => (
                             <div key={index} className="col-md-6 col-sm-6 col-12 mb-4">
                                 <CardProduct
@@ -65,7 +65,7 @@ const Product = () => {
                                     detail={p.detail}
                                     ingredients={p.ingredients}
                                     image={p.image}
-                                    category={p.category}
+                                    category={p.category_name}
                                 />
                             </div>
                         ))}

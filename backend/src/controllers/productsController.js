@@ -1,4 +1,4 @@
-import { getProductsModel, createProductModel, deleteProductModel, likeProductModel } from '../models/productModel.js'
+import { getProductsModel, createProductModel, deleteProductModel, likeProductModel, updateProductModel } from '../models/productModel.js'
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -11,8 +11,8 @@ export const getAllProducts = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    const { titulo, img, descripcion } = req.body
-    const newProduct = await createProductModel(titulo, img, descripcion)
+    const { name, image, detail, price, stock, category } = req.body
+    const newProduct = await createProductModel(name, image, detail, price, stock, category )
     res.json({ product: newProduct })
   } catch (error) {
     res.json({ error: 'Error al procesar la solicitud' })
@@ -25,9 +25,9 @@ export const deleteProduct = async (req, res) => {
     const { id } = req.params
     const deleted = await deleteProductModel(id)
     if (deleted) {
-      res.json({ message: 'Product eliminado correctamente' })
+      res.json({ message: 'Producto eliminado correctamente' })
     } else {
-      res.status(404).json({ error: 'Product no encontrado' })
+      res.status(404).json({ error: 'Producto no encontrado' })
     }
   } catch (error) {
     res.status(500).json({ error: 'Error al procesar la solicitud' })
@@ -48,6 +48,22 @@ export const likeProduct = async (req, res) => {
       res.status(400).json({ error: 'No se pudo procesar la acción' });
     }
 
+  } catch (error) {
+    console.error('Error =>', error);
+    res.status(500).json({ error: 'Error al procesar la solicitud' });
+  }
+};
+
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, image, detail, price, stock, category } = req.body
+    const updatedProduct = await updateProductModel(id, name, image, detail, price, stock, category);
+    if (updatedProduct) {
+      res.json({ product: updatedProduct });
+    } else {
+      res.status(404).json({ error: 'Product no encontrado' });
+    }
   } catch (error) {
     console.error('Error =>', error);
     res.status(500).json({ error: 'Error al procesar la solicitud' });

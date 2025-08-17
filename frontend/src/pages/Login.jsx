@@ -11,7 +11,19 @@ const Login = () => {
     };
 
     const returnAlert = (message) => toast.error(message, { autoClose: 2000 });
-    const returnSuccess = (message) => toast.success(message, { autoClose: 2000 });
+    const returnSuccessAlertWindow = (message) => {
+        import('sweetalert2').then(Swal => {
+            Swal.default.fire({
+                icon: 'success',
+                title: message,
+                confirmButtonText: 'Entendido!',
+                timerProgressBar: true
+            }).then(() => {
+                setUser({ email: '', password: '' })
+                window.location.href = '/login';
+            });
+        });
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -23,10 +35,8 @@ const Login = () => {
             return returnAlert('Por favor rellena todos los campos')
         } else {
             const isAuthenticated = await auth(email, password)
-
             if (isAuthenticated) {
-                returnSuccess(`Se ha iniciado sesión con el usuario ${email.split('@')[0].trim()}`)
-                setUser({ email: '', password: '' })
+                returnSuccessAlertWindow(`Se ha iniciado sesión con el usuario ${email.split('@')[0].trim()}`)
             }
         }
     };

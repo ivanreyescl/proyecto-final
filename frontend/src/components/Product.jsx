@@ -5,16 +5,19 @@ import { ProductContext } from "../context/ProductsContext.jsx"
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Button from './Button.jsx';
+import { UserContext } from "../context/UserContext";
+
 
 const Product = () => {
     const { product, loading } = useContext(ProductContext)
     const { id } = useParams();
+    const { role } = useContext(UserContext)
 
     if (loading) return <p>Cargando products...</p>;
 
     if (id) {
-        const selectedProduct = product?.find((p) => p.id === (id))
-
+        const normalizedId = parseInt(id)
+        const selectedProduct = product?.find((p) => p.id === (normalizedId))
         if (!selectedProduct) return <p>Producto no encontrado</p>
 
         return (
@@ -38,14 +41,15 @@ const Product = () => {
 
     return (
         <div>
-            {/* TODO: Hay que agregar una reestricción por roles que impida que el usuario normal se le renderice el link al formulario */}
             <div className="container mt-5 d-flex justify-content-between align-items-center">
-                <Link to={`/products/new`}>
-                    <Button 
-                        label="Agregar Producto"
-                        icon="fa fa-plus"
-                    />
-                </Link> 
+                {role == "Administrador" ? (
+                    <Link to={`/products/new`}>
+                        <Button
+                            label="Agregar Producto"
+                            icon="fa fa-plus"
+                        />
+                    </Link>
+                ) : null}
             </div>   
             <div className="container mt-4">
                 <div className="row">

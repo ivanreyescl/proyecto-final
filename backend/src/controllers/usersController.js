@@ -1,4 +1,4 @@
-import { createUserModel, getUserModel } from '../models/usersModel.js'
+import { registerUserModel, getUserModel } from '../models/usersModel.js'
 
 export const getUser = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ export const getUser = async (req, res) => {
 export const registerUser = async (req, res) => {
   try {
     const { email, password, first_name, last_name } = req.body
-    const user = await createUserModel(email, password, first_name, last_name)
+    const user = await registerUserModel(email, password, first_name, last_name)
     res.status(201).json({ message: 'Usuario creado correctamente', user })
   } catch (error) {
     console.log(error)

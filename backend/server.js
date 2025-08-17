@@ -4,6 +4,7 @@ import 'dotenv/config'
 
 import productRoutes from './routes/products.routes.js'
 import userRoutes from './routes/users.routes.js'
+import authRoutes from './routes/auth.routes.js'
 
 const PORT = process.env.PORT || 5000
 
@@ -13,7 +14,8 @@ app.use(cors())
 app.use(express.json())
 
 app.use(productRoutes)
-app.use(userRoutes)
+app.use('/', userRoutes)
+app.use('/auth', authRoutes)
 
 app.listen(PORT, () => {
     console.log(`🔥 Server on 🔥 http://localhost:${PORT}`)

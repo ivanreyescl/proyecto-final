@@ -13,8 +13,8 @@ const Product = () => {
     if (loading) return <p>Cargando products...</p>;
 
     if (id) {
-        const selectedProduct = product?.find((p) => p.id === (id))
-
+        const normalizedId = parseInt(id)
+        const selectedProduct = product?.find((p) => p.id === (normalizedId))
         if (!selectedProduct) return <p>Producto no encontrado</p>
 
         return (

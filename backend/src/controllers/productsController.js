@@ -37,15 +37,19 @@ export const deleteProduct = async (req, res) => {
 
 export const likeProduct = async (req, res) => {
   try {
-    const { id } = req.params
-    const deleted = await likeProductModel(id)
-    if (deleted) {
-      res.json({ message: 'Product actualizado correctamente' })
+    const { id } = req.params;
+    const result = await likeProductModel(1, id);
+
+    if (result.added) {
+      res.json({ message: 'Producto agregado a favoritos', favorite: result.favorite });
+    } else if (result.removed) {
+      res.json({ message: 'Producto eliminado de favoritos', product_id: result.product_id });
     } else {
-      res.status(404).json({ error: 'Product no encontrado' })
+      res.status(400).json({ error: 'No se pudo procesar la acción' });
     }
+
   } catch (error) {
-    res.status(500).json({ error: 'Error al procesar la solicitud' })
-    console.error('Error =>', error)
+    console.error('Error =>', error);
+    res.status(500).json({ error: 'Error al procesar la solicitud' });
   }
-}
+};

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { ProductContext } from '../context/ProductsContext';
+import { urlBaseServer } from '../server_config';
 import Button from '../components/Button';
 
 const Profile = () => {
@@ -10,23 +11,23 @@ const Profile = () => {
     const [favorites, setFavorites] = useState([]);
     const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    console.log(role)
     // --- Admin state ---
     const [adminProducts, setAdminProducts] = useState([]);
     const [adminLoading, setAdminLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (role === 'user') {
+        if (role == 'Normal') {
             const fetchUserData = async () => {
                 try {
                     setLoading(true);
-                    const response = await fetch('http://localhost:5000/users');
+                    const response = await fetch(`${urlBaseServer}/users`);
                     const users = await response.json();
                     const user = users.find(u => u.firstName === firstName && u.lastName === lastName);
 
                     if (user) {
-                        const productsResponse = await fetch('http://localhost:5000/products');
+                        const productsResponse = await fetch(`${urlBaseServer}/products`);
                         const products = await productsResponse.json();
                         setFavorites(products.filter(p => user.favorites?.includes(p.id)));
                         setPurchases(products.filter(p => user.purchases?.includes(p.id)));
@@ -43,11 +44,12 @@ const Profile = () => {
 
     // --- Fetch all products for admin view ---
     useEffect(() => {
-        if (role === 'admin') {
+        if (role == 'Administrador') {
+            console.log('Fetching products for admin');
             const fetchAllProducts = async () => {
                 try {
                     setAdminLoading(true);
-                    const response = await fetch('http://localhost:5000/products');
+                    const response = await fetch(`${urlBaseServer}/products`);
                     const products = await response.json();
                     const normalized = Array.isArray(products[0]) ? products[0] : products;
                     setAdminProducts(normalized);
@@ -105,7 +107,7 @@ const Profile = () => {
             </div>
 
             {/* Admin Panel */}
-            {role === 'admin' && (
+            {role == 'Administrador' && (
                 <>
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <Link to={`/products/new`}>
@@ -172,7 +174,7 @@ const Profile = () => {
             )}
 
             {/* User content */}
-            {role === 'user' && (
+            {role == 'Normal' && (
                 <>
                     {/* Favoritos */}
                     <div className="row mb-4">

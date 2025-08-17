@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ProductContext } from '../context/ProductsContext.jsx';
-import { Link } from 'react-router-dom';
 import Button from './Button.jsx';
+import { CategoryContext } from "../context/CategoryContext";
 
 const RegisterProduct = () => {
     const { id } = useParams();
@@ -162,10 +162,16 @@ const RegisterProduct = () => {
                         required
                         >
                         {/*TODO: Se deben mostrar las opciones disponibles acá, en base a los objetos creados de la tabla Category */}
-                        <option value="">Seleccione una categoría</option>
-                        <option value="Procesadores">Procesadores</option>
-                        <option value="GPU">GPU</option>
-                        <option value="RAM">RAM</option>
+                            {({ categories }) => (
+                                <>
+                                    <option value="">Seleccione una categoría</option>
+                                    {categories.map(category => (
+                                        <option key={category.id} value={category.name}>
+                                            {category.name}
+                                        </option>
+                                    ))}
+                                </>
+                            )}
                         </select>
                     </div>
 

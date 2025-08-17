@@ -1,4 +1,6 @@
+
 import { registerUserModel, getUserModel, loginModel } from '../models/usersModel.js'
+
 
 export const getUser = async (req, res) => {
   try {

@@ -1,5 +1,7 @@
+
 import pool from "../../db/config.js";
 import bcrypt from "bcrypt"
+
 
 export const getUserModel = async (email) => {
   const sqlQuery = {
@@ -41,6 +43,15 @@ export const registerUserModel = async (email, password, first_name, last_name) 
     values: [email, hashedPassword, first_name, last_name]
   }
 
+  const response = await pool.query(SQLquery)
+  return response.rows[0]
+}
+
+export const findUserByEmailModel = async (email) => {
+  const SQLquery = {
+    text: 'SELECT * FROM Users WHERE email = $1',
+    values: [email]
+  }
   const response = await pool.query(SQLquery)
   return response.rows[0]
 }

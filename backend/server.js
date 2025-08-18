@@ -19,7 +19,7 @@ const app = express()
 app.use(cors({
     // ${FRONTPORT} == frontend (5173 x defecto en vite)
     // ${PORT} == backend (5000 x defecto)
-    origin: `http://localhost:${FRONTPORT}`, 
+    origin: `http://localhost:${FRONTPORT}`,
     credentials: true
 }))
 
@@ -28,6 +28,7 @@ app.use(express.json())
 app.use(productRoutes)
 
 app.use('/', userRoutes)
+app.use(categoryRoutes)
 app.use('/auth', authRoutes)
 
 app.use(categoryRoutes)

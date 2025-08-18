@@ -12,6 +12,24 @@
   }
 }
 
+.favorite-item {
+  position: absolute;
+  bottom: 220px;
+  right: 10px;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 2.5rem;
+  box-shadow: 56 66px 66px white;
+  animation: pulse 1.5s infinite;
+  transition: transform 0.3s ease;
+}
+
+.favorite-item:hover {
+  transform: scale(1.5);
+}
+
 .price-badge {
   position: absolute;
   top: 10px;

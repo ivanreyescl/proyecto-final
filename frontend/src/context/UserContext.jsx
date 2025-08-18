@@ -25,14 +25,15 @@ export const UserProvider = ({ children }) => {
             setEmail(data.user.email);
             setFirstName(data.user.firstName || '');
             setLastName(data.user.lastName || '');
-            setRole(data.user.role || '');
+            setRole(data.user.role_description || '');
 
             localStorage.setItem('token', data.accessToken);
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('firstName', data.user.firstName || '');
             localStorage.setItem('lastName', data.user.lastName || '');
-            localStorage.setItem('role', data.user.role || '');
+            localStorage.setItem('role', data.user.role_description || '');
 
+            returnSuccess('Usuario registrado exitosamente, sesión iniciada automáticamente.');
             return true;
         } catch (error) {
             returnAlert(error.response?.data || 'Error en la autenticación');

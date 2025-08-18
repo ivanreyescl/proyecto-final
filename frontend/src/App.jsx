@@ -15,54 +15,62 @@ import CartProvider from './context/CartContext'
 import UserProvider from './context/UserContext'
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ProductsForms from './components/ProductForm.jsx';
+import FavoriteProvider from './context/FavoriteContext.jsx';
+import CategoryProvider from './context/CategoryContext.jsx';
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
           <UserProvider>
-            <CartProvider>
-              <ProductsProvider>
-                <Navbar/>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/register" element={                    
-                      <ProtectedRoute>
-                        <Register />
-                      </ProtectedRoute>
-                      } 
-                    />
-                    <Route path="/login" element={
-                      <ProtectedRoute>
-                        <Login />
-                      </ProtectedRoute>
-                      } 
-                    />
-                    <Route path="/products" element={
-                        <Products />
-                      } 
-                    />
-                    <Route path="/products/new" element={
-                        <ProductsForms />
-                      } 
-                    />
-                    <Route path="/products/edit/:id" element={
-                        <ProductsForms />
-                      } 
-                    />
-                    <Route path="/cart" element={<Cart /> }/>                  
-                    <Route path="/products/:id" element={<Product />} />
-                    <Route path="/profile" element={
-                      <ProtectedRoute>
-                        <Profile />
-                      </ProtectedRoute>
-                      } 
-                    />
-                    <Route path="/404" element={<NotFound />} />
-                  </Routes>
-                <Footer/>
-              </ProductsProvider>
-            </CartProvider>
+            <FavoriteProvider>
+              <CartProvider>
+                <ProductsProvider>
+                  <Navbar/>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/register" element={                    
+                        <ProtectedRoute>
+                          <Register />
+                        </ProtectedRoute>
+                        } 
+                      />
+                      <Route path="/login" element={
+                        <ProtectedRoute>
+                          <Login />
+                        </ProtectedRoute>
+                        } 
+                      />
+                      <Route path="/products" element={
+                          <Products />
+                        } 
+                      />
+                      <Route path="/products/new" element={
+                          <CategoryProvider>
+                            <ProductsForms />
+                          </CategoryProvider>
+                        } 
+                      />
+                      <Route path="/products/edit/:id" element={
+                          <CategoryProvider>
+                            <ProductsForms />
+                          </CategoryProvider>
+                        } 
+                      />
+                      <Route path="/cart" element={<Cart /> }/>                  
+                      <Route path="/products/:id" element={<Product />} />
+                      <Route path="/profile" element={
+                        <ProtectedRoute>
+                          <Profile />
+                        </ProtectedRoute>
+                        } 
+                      />
+                      <Route path="/404" element={<NotFound />} />
+                    </Routes>
+                  <Footer/>
+                </ProductsProvider>
+              </CartProvider>
+            </FavoriteProvider>
           </UserProvider>
         <ToastContainer />             
       </BrowserRouter>

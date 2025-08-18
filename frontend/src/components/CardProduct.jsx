@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Button from './Button'
 import "./CardProduct.css"
 import { useAddToCart } from "../hooks/addToCart";
+import { UserContext } from "../context/UserContext";
 
 const CardProduct = ({ id, name, price, image, detail, category }) => {
   const addToCartHandler = useAddToCart();
@@ -41,7 +42,9 @@ const CardProduct = ({ id, name, price, image, detail, category }) => {
   )
 }
 
+
 const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
+  const { role } = useContext(UserContext)
   const formattedPrice = price.toLocaleString()
   const capitalizedName = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
   const addToCartHandler = useAddToCart();
@@ -75,13 +78,14 @@ const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
               icon="fa fa-cart-plus" 
               onClick={() => addToCartHandler({ id, name, price, image, detail, category })}
             />
-            {/* TODO: Este botón SOLO debe estar disponible para administradores */}
-            <Link to={`/products/edit/${id}`}>
-                <Button 
-                    icon="fa fa-cog"
-                    label="Modificar Producto" 
+            {role === 'Administrador' ? (
+              <Link to={`/products/edit/${id}`}>
+                <Button
+                  icon="fa fa-cog"
+                  label="Modificar Producto"
                 />
-            </Link>
+              </Link>
+            ) : null}
             <Link to="/products">
                 <Button label="Volver" icon="fa fa-arrow-left" />
             </Link> 

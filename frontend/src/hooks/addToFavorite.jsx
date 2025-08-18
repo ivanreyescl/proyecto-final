@@ -4,7 +4,7 @@ import { FavoriteContext } from '../context/FavoriteContext';
 import { urlBaseServer } from '../server_config';
 
 export const useAddToFavorite = () => {
-  const { toggleFavorite } = useContext(FavoriteContext);
+  const { toggleFavorite, favorites } = useContext(FavoriteContext);
 
   const handleLike = async (product, e) => {
     if (e) e.preventDefault();
@@ -21,7 +21,12 @@ export const useAddToFavorite = () => {
       }
 
       toggleFavorite(product);
-      toast.success('Producto agregado a favoritos');
+      const isFavorite = favorites ? favorites.some(fav => fav.id === product.id) : false;
+      if (!isFavorite) {
+        toast.success('Producto agregado a favoritos');
+      } else {
+        toast.warning('Producto eliminado de favoritos');
+      }
     } catch (error) {
       toast.error('No se pudo agregar a favoritos');
       console.error(error);

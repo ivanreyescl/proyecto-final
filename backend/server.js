@@ -5,6 +5,7 @@ import 'dotenv/config'
 import productRoutes from './routes/products.routes.js'
 import userRoutes from './routes/users.routes.js'
 import authRoutes from './routes/auth.routes.js'
+import usercartRoutes from './routes/usercarts.routes.js'
 
 import categoryRoutes from './routes/categories.routes.js'
 
@@ -30,6 +31,7 @@ app.use('/', userRoutes)
 app.use('/auth', authRoutes)
 
 app.use(categoryRoutes)
+app.use(usercartRoutes)
 
 
 app.listen(PORT, () => {

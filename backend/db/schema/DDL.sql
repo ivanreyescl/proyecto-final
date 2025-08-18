@@ -19,11 +19,6 @@ CREATE TABLE Roles (
     description VARCHAR(255)
 );
 
--- Insertar roles por defecto
-INSERT INTO Roles (superuser, description) VALUES
-    (FALSE, 'Normal'),
-    (TRUE, 'Administrador');
-
 -- Tabla Categories
 CREATE TABLE Categories (
     id SERIAL PRIMARY KEY,
@@ -41,11 +36,6 @@ CREATE TABLE Products (
     stock INTEGER,
     image TEXT
 );
-
-INSERT INTO Categories (name) VALUES
-    ('Procesadores'),
-    ('GPU'),
-    ('RAM');
 
 -- Tabla UserRoles
 CREATE TABLE UserRoles (

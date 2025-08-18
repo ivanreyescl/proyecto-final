@@ -6,7 +6,8 @@ import { useAddToCart } from "../hooks/addToCart";
 import { UserContext } from "../context/UserContext";
 import { ProductContext } from "../context/ProductsContext";
 import Swal from 'sweetalert2';
-import { toast } from 'react-toastify';
+import { useAddToFavorite } from "../hooks/addToFavorite";
+import { FavoriteContext } from "../context/FavoriteContext";
 
 const CardProduct = ({ id, name, price, image, detail, category }) => {
   const addToCartHandler = useAddToCart();
@@ -50,6 +51,11 @@ const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
   const formattedPrice = price.toLocaleString()
   const capitalizedName = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
   const addToCartHandler = useAddToCart();
+  const { handleLike } = useAddToFavorite();
+  const { favorites } = useContext(FavoriteContext);
+  const { token } = useContext(UserContext);
+
+  const isFavorite = favorites ? favorites.some(fav => fav.id === id) : false;
 
   const { deleteProduct } = useContext(ProductContext);
 
@@ -93,6 +99,15 @@ const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
             <strong> ${formattedPrice} CLP</strong>
           </p>
           <hr />
+          <div className="container mt-5 d-flex justify-content-between align-items-center">
+            <button
+                className="favorite-item"
+                onClick={(e) => handleLike({ id, name, price, image, detail, category }, e)}
+                style={{ background: 'none', border: 'none', padding: 0, display: token ? 'block' : 'none' }}
+            >
+                <i className={`fa${isFavorite ? 's' : 'r'} fa-heart`}></i>
+            </button>
+          </div>
           <div className="container mt-5 d-flex justify-content-between align-items-center">
             <Button 
               label="Agregar al carrito"

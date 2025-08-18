@@ -6,8 +6,8 @@ import { UserContext } from '../context/UserContext'
 
 const Navbar = () => {
     const { token, logout } = useContext(UserContext)
-    const { total } = useContext(CartContext)
-    const formattedTotal = total.toLocaleString()
+    const { totalPrice } = useContext(CartContext)
+    const formattedTotal = totalPrice.toLocaleString()
     return (
         <nav className="navbar navbar-expand-lg bg-dark text-white">
             <div className="container-fluid justify-content-end">

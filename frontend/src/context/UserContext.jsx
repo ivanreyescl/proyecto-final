@@ -9,6 +9,7 @@ const returnSuccess = (message) => toast.success(message, { autoClose: 2000 });
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+    const [userId, setUserId] = useState(Number(localStorage.getItem('userId')) || 0);
     const [token, setToken] = useState(localStorage.getItem('token') || '');
     const [email, setEmail] = useState(localStorage.getItem('email') || '');
     const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
@@ -22,11 +23,13 @@ export const UserProvider = ({ children }) => {
 
             // json-server-auth devuelve: accessToken y user
             setToken(data.accessToken);
+            setUserId(data.user.id);
             setEmail(data.user.email);
             setFirstName(data.user.firstName || '');
             setLastName(data.user.lastName || '');
             setRole(data.user.role_description || '');
 
+            localStorage.setItem('userId', data.user.id);
             localStorage.setItem('token', data.accessToken);
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('firstName', data.user.firstName || '');
@@ -54,6 +57,7 @@ export const UserProvider = ({ children }) => {
 
             localStorage.setItem('token', data.accessToken);
             localStorage.setItem('email', data.user.email);
+            localStorage.setItem('userId', data.user.id);
             localStorage.setItem('firstName', data.user.firstName || '');
             localStorage.setItem('lastName', data.user.lastName || '');
             localStorage.setItem('role', data.user.role || '');
@@ -67,11 +71,13 @@ export const UserProvider = ({ children }) => {
     };
 
     const logout = () => {
+        setUserId(0);
         setToken('');
         setEmail('');
         setFirstName('');
         setLastName('');
         setRole('');
+        localStorage.removeItem('userId');
         localStorage.removeItem('token');
         localStorage.removeItem('email');
         localStorage.removeItem('firstName');
@@ -98,6 +104,7 @@ export const UserProvider = ({ children }) => {
     };
 
     const setUserState = {
+        userId,
         token,
         email,
         firstName,

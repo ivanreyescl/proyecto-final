@@ -1,5 +1,7 @@
-import pool from '../../db/config.js'
-import bcrypt from 'bcrypt'
+
+import pool from "../../db/config.js";
+import bcrypt from "bcrypt"
+
 
 export const getUserModel = async (email) => {
   const sqlQuery = {
@@ -29,7 +31,6 @@ export const loginModel = async (email, password) => {
 
   const isValid = bcrypt.compareSync(password, user[0].password);
   if (!isValid) return null;
-  console.log(user[0])
   const { password: _, ...userWithoutPassword } = user[0];
   return userWithoutPassword;
 };

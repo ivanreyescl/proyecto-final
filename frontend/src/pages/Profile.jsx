@@ -11,7 +11,6 @@ const Profile = () => {
     const [favorites, setFavorites] = useState([]);
     const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
-    console.log(role)
     // --- Admin state ---
     const [adminProducts, setAdminProducts] = useState([]);
     const [adminLoading, setAdminLoading] = useState(true);
@@ -45,7 +44,6 @@ const Profile = () => {
     // --- Fetch all products for admin view ---
     useEffect(() => {
         if (role == 'Administrador') {
-            console.log('Fetching products for admin');
             const fetchAllProducts = async () => {
                 try {
                     setAdminLoading(true);

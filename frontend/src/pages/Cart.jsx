@@ -1,48 +1,57 @@
-import React, { useContext } from 'react'
-import axios from 'axios'
-import { CartContext } from '../context/CartContext'
-import { UserContext } from '../context/UserContext'
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import { UserContext } from '../context/UserContext';
 
 const Cart = () => {
-    const { cart, increaseQuantity, decreaseQuantity, total } = useContext(CartContext)
-    const { token } = useContext(UserContext)
+    const { cart, increaseQuantity, decreaseQuantity, totalPrice } = useContext(CartContext);
+    const { token, userId } = useContext(UserContext);
 
     const checkout = async () => {
+        if (!userId) return alert('Debes iniciar sesión para pagar');
 
         try {
-            const URL = 'http://localhost:5000/api/checkouts'
-            const { data } = await axios.post(URL, { cart }, {
-                headers: { Authorization: `Bearer ${token}` }
-            })
-    
-            alert(data.message)
-        } catch (error) {
-            alert(error.response?.data?.error || 'Error al procesar el pago')
-        }
-    }
+            //const response = await fetch(`${process.env.REACT_APP_API_URL}/checkouts`, {
+            //    method: 'POST',
+            //    headers: {
+            //        'Content-Type': 'application/json',
+            //        Authorization: `Bearer ${token}`
+            //    },
+            //    body: JSON.stringify({ user_id: userId })
+            //});
 
+            const data = await response.json();
+            alert(data.message || 'Pago procesado correctamente');
+        } catch (error) {
+            console.error(error);
+            alert('Error al procesar el pago');
+        }
+    };
     return (
         <div className="container text-center">
             {cart.length > 0 ? (
                 <>
-                    {cart.map(product => (
-                        <div key={product.id + product.name} className="row align-items-center mb-3">
+                    {cart.map(item => (
+                        <div key={item.cartItemId} className="row align-items-center mb-3">
                             <div className="col-md-2">
-                                <img src={product.image} alt={product.name} className="img-fluid" />
+                                <img src={item.image} alt={item.name} className="img-fluid" />
                             </div>
                             <div className="col-md-4">
-                                <h3>{product.name}</h3>
+                                <h3>{item.name}</h3>
                             </div>
                             <div className="col-md-4 d-flex justify-content-center align-items-center">
-                                <p className="p-5 fw-bold">Precio: ${product.price}</p>
-                                <button className="btn btn-outline-danger" onClick={() => decreaseQuantity(product.id)}>-</button>
-                                <span className="mx-3 fw-bold">{product.count}</span>
-                                <button className="btn btn-outline-primary" onClick={() => increaseQuantity(product.id)}>+</button>
+                                <p className="p-5 fw-bold">Precio: ${item.price}</p>
+                                <button className="btn btn-outline-danger" onClick={() => decreaseQuantity(item.cartItemId, item.count)}>-</button>
+                                <span className="mx-3 fw-bold">{item.count}</span>
+                                <button className="btn btn-outline-primary" onClick={() => increaseQuantity(item.cartItemId, item.count)}>+</button>
                             </div>
                         </div>
                     ))}
-                    <h3 className="text-start">Total: ${total}</h3>
-                    {token ? <button className="btn btn-outline-dark" onClick={checkout}>Pagar</button> : <button className="btn btn-outline-secondary" disabled>Inicia sesión para pagar</button>}
+                    <h3 className="text-start">Total: ${totalPrice}</h3>
+                    {token ? (
+                        <button className="btn btn-outline-dark" onClick={checkout}>Pagar</button>
+                    ) : (
+                        <button className="btn btn-outline-secondary" disabled>Inicia sesión para pagar</button>
+                    )}
                 </>
             ) : (
                 <div>
@@ -50,7 +59,7 @@ const Cart = () => {
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default Cart
+export default Cart;

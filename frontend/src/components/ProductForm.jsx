@@ -6,17 +6,17 @@ import Button from './Button.jsx';
 import { CategoryContext } from "../context/CategoryContext";
 
 const RegisterProduct = () => {
+    const { categories } = useContext(CategoryContext);
     const { id } = useParams();
     const navigate = useNavigate();
     const { product: productsList, loading, register, update } = useContext(ProductContext);
-
     const [product, setProduct] = useState({
         name: '',
         detail: '',
         code: '',
         price: '',
         image: '',
-        category: ''
+        category_id: ''
     });
 
     useEffect(() => {
@@ -29,7 +29,7 @@ const RegisterProduct = () => {
                     code: prodToEdit.code || '',
                     price: prodToEdit.price || '',
                     image: prodToEdit.image || '',
-                    category: prodToEdit.category || ''
+                    category_id: prodToEdit.category_id || ''
                 });
             } else {
                 toast.error('Producto no encontrado');
@@ -45,20 +45,20 @@ const RegisterProduct = () => {
     const returnAlert = (msg) => toast.error(msg, { autoClose: 2000 });
     const returnSuccess = (msg) => toast.success(msg, { autoClose: 2000 });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => { 
         e.preventDefault();
-        const { name, detail, code, price, category, image } = product;
+        const { name, detail, code, price, category_id, image } = product;
 
         if (!name.trim()) return returnAlert('El nombre es obligatorio');
         if (!price || isNaN(price) || Number(price) <= 0) return returnAlert('Precio inválido');
-        if (!category.trim()) return returnAlert('La categoría es obligatoria');
+        if (!category_id) return returnAlert('La categoría es obligatoria');
 
         try {
         if (id) {
-            await update(id, { name, detail, code, price, image, category });
+            await update(id, { name, detail, code, price, image, category: Number(category_id) });
             returnSuccess('Producto actualizado con éxito');
         } else {
-            await register({ name, detail, code, price, image, category });
+            await register({ name, detail, code, price, image, category: Number(category_id) });
             returnSuccess('Producto registrado con éxito');
             setProduct({
             name: '',
@@ -66,7 +66,7 @@ const RegisterProduct = () => {
             code: '',
             price: '',
             image: '',
-            category: ''
+            category_id: ''
             });
             }
             navigate('/products');
@@ -152,27 +152,22 @@ const RegisterProduct = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-6 mb-3">
-                        <label htmlFor="category" className="form-label">Categoría</label>
-                        <select
-                        className="form-control"
-                        id="category"
-                        name="category"
-                        value={product.category}
-                        onChange={handleChange}
-                        required
-                        >
-                        {/*TODO: Se deben mostrar las opciones disponibles acá, en base a los objetos creados de la tabla Category */}
-                            {({ categories }) => (
-                                <>
-                                    <option value="">Seleccione una categoría</option>
-                                    {categories.map(category => (
-                                        <option key={category.id} value={category.name}>
-                                            {category.name}
-                                        </option>
-                                    ))}
-                                </>
-                            )}
-                        </select>
+                            <label htmlFor="category" className="form-label">Categoría</label>
+                            <select
+                                className="form-control"
+                                id="category"
+                                name="category_id"
+                                value={product.category_id}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Seleccione una categoría</option>
+                                {categories.map(category => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                                ))}
+                            </select>
                     </div>
 
                     <div className="col-md-6 mb-3">
@@ -195,7 +190,7 @@ const RegisterProduct = () => {
                         type="submit"
                         label={id ? 'Actualizar Producto' : 'Registrar Producto'}
                         icon={id ? 'fa fa-save' : 'fa fa-plus'}
-                        disabled={!product.name.trim() || !product.price || !product.category.trim()}
+                        disabled={!product.name.trim() || !product.price || !product.category_id}
                     />
                     <Link to="/products">
                         <Button label="Volver" icon="fa fa-arrow-left" />

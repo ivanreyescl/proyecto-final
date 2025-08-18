@@ -4,7 +4,7 @@ import { urlBaseServer } from "../server_config";
 export const CategoryContext = createContext();
 
 const CategoriesProvider = ({ children }) => {
-    const [category, setCategory] = useState(null);
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const ENV_URL = `${urlBaseServer}/categories`;
 
@@ -13,7 +13,7 @@ const CategoriesProvider = ({ children }) => {
             const response = await fetch(ENV_URL);
             const data = await response.json();
             const normalizedData = data.categories;
-            setCategory(normalizedData);
+            setCategories(normalizedData);
         } catch (error) {
             console.error(error);
         } finally {
@@ -26,7 +26,7 @@ const CategoriesProvider = ({ children }) => {
     }, []);
 
     return (
-        <CategoryContext.Provider value={{ category, loading }}>
+        <CategoryContext.Provider value={{ categories, loading }}>
             {children}
         </CategoryContext.Provider>
     );

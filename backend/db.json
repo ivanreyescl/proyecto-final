@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "email": "q@desafiolatam.com",
+      "password": "$2a$10$T3WJGUugptGEzrd1xVuJo.D1FGD4P7t5wfphTp9mY6HVP8l5D9qxy",
+      "firstName": "pollo",
+      "lastName": "polo",
+      "id": 1
+    }
+  ]
+}

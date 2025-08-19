@@ -29,21 +29,21 @@ const App = () => {
                   <Navbar/>
                     <Routes>
                       <Route path="/" element={<Home />} />
-                      <Route path="/register" element={                    
+                      <Route path="/register" element={
                         <ProtectedRoute>
                           <Register />
                         </ProtectedRoute>
-                        } 
+                        }
                       />
                       <Route path="/login" element={
                         <ProtectedRoute>
                           <Login />
                         </ProtectedRoute>
-                        } 
+                        }
                       />
                       <Route path="/products" element={
                           <Products />
-                        } 
+                        }
                       />
                       <Route path="/products/new" element={
                           <CategoryProvider>

@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { urlBaseServer } from "../server_config";
@@ -15,6 +15,15 @@ export const UserProvider = ({ children }) => {
     const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
     const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '');
     const [role, setRole] = useState(localStorage.getItem('role') || '');
+
+        useEffect(() => {
+        setUserId(Number(localStorage.getItem('userId')) || 0);
+        setToken(localStorage.getItem('token') || '');
+        setEmail(localStorage.getItem('email') || '');
+        setFirstName(localStorage.getItem('firstName') || '');
+        setLastName(localStorage.getItem('lastName') || '');
+        setRole(localStorage.getItem('role') || '');
+    }, []);
 
     const auth = async (email, password) => {
         try {

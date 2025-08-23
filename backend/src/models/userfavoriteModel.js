@@ -37,7 +37,6 @@ export const getUserFavoriteModel = async (userId) => {
 
 
 export const addFavoriteItemModel = async (userId, productId, quantity = 1) => {
-    // Obtener o crear UserFavorites
     let favorite = await pool.query(
         'SELECT id FROM userfavorites WHERE user_id = $1', 
         [userId]
@@ -76,30 +75,26 @@ export const addFavoriteItemModel = async (userId, productId, quantity = 1) => {
 
 };
 
-export const updateFavoriteItemModel = async (favoriteItemId, quantity, productId = null) => {
+export const updateFavoriteItemModel = async (favoriteItemId, productId = null) => {
     const itemRes = await pool.query(
-        'SELECT user_favorite_id, quantity, product_id FROM favoriteitems WHERE id = $1',
+        'SELECT user_favorite_id, product_id FROM favoriteitems WHERE id = $1',
         [favoriteItemId]
     );
+
     if (itemRes.rows.length === 0) return null;
 
-    const { user_favorite_id, quantity: oldQuantity } = itemRes.rows[0];
-    const diff = quantity - oldQuantity;
-
-    // Actualizar total_liked
-    await pool.query(
-        'UPDATE userfavorites SET total_liked = total_liked + $1 WHERE id = $2',
-        [diff, user_favorite_id]
-    );
-
-    const fields = ['quantity = $1'];
-    const values = [quantity];
-    let idx = 2;
+    const fields = [];
+    const values = [];
+    let idx = 1;
 
     if (productId !== null) {
         fields.push(`product_id = $${idx}`);
         values.push(productId);
         idx++;
+    }
+
+    if (fields.length === 0) {
+        return itemRes.rows[0];
     }
 
     values.push(favoriteItemId);
@@ -112,19 +107,19 @@ export const updateFavoriteItemModel = async (favoriteItemId, quantity, productI
     return response.rows[0];
 };
 
+
 export const deleteFavoriteItemModel = async (favoriteItemId) => {
     const itemRes = await pool.query(
-        'SELECT user_favorite_id, quantity FROM favoriteitems WHERE id = $1',
+        'SELECT user_favorite_id FROM favoriteitems WHERE id = $1',
         [favoriteItemId]
     );
     if (itemRes.rows.length === 0) return null;
 
-    const { user_favorite_id, quantity } = itemRes.rows[0];
+    const { user_favorite_id } = itemRes.rows[0];
 
-    // Restar del total_liked
     await pool.query(
-        'UPDATE userfavorites SET total_liked = total_liked - $1 WHERE id = $2',
-        [quantity, user_favorite_id]
+        'UPDATE userfavorites SET total_liked = total_liked - 1 WHERE id = $1',
+        [user_favorite_id]
     );
 
     const response = await pool.query(

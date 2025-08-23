@@ -49,7 +49,8 @@ const Profile = () => {
                     setAdminLoading(true);
                     const response = await fetch(`${urlBaseServer}/products`);
                     const products = await response.json();
-                    const normalized = Array.isArray(products[0]) ? products[0] : products;
+                    //const normalized = Array.isArray(products[0]) ? products[0] : products;
+                    const normalized = Array.isArray(products) ? products : [];
                     setAdminProducts(normalized);
                 } catch (error) {
                     console.error("Error fetching products for admin:", error);

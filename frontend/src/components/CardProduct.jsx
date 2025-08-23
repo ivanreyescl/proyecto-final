@@ -46,7 +46,7 @@ const CardProduct = ({ id, name, price, image, detail, category }) => {
 }
 
 
-const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
+const CardProductDetailed = ({ id, name, price, image, detail, category, stock }) => {
   const { role } = useContext(UserContext)
   const formattedPrice = price.toLocaleString()
   const capitalizedName = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
@@ -86,6 +86,11 @@ const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
             className="card-img-top-single "
             alt={name}
           />
+        </div>
+        <div className="card-text d-flex text-left flex-column justify-content-start">
+          <span className={`badge ${stock > 0 ? 'bg-success' : 'bg-secondary'}`}>
+                {stock > 0 ? `Quedan: ${stock} !` : 'Agotado'}
+          </span>
         </div>  
         <div className="card-body card-text d-flex flex-column justify-content-center">
           <hr />

@@ -32,6 +32,7 @@ const Product = () => {
                     image={selectedProduct.image}
                     detail={selectedProduct.detail}
                     category={selectedProduct.category_name}
+                    stock={selectedProduct.stock}
                 />
                 </div>
             </div>

@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import { CartContext } from '../context/CartContext';
+import { FavoriteContext } from '../context/FavoriteContext';
 import { ProductContext } from '../context/ProductsContext';
 import { urlBaseServer } from '../server_config';
 import Button from '../components/Button';
@@ -8,49 +10,50 @@ import Button from '../components/Button';
 const Profile = () => {
     const { firstName, lastName, role, logout, userId, token } = useContext(UserContext);
     const { deleteProduct } = useContext(ProductContext);
-    const [favorites, setFavorites] = useState([]);
+    const { cart } = useContext(CartContext);
+    const { favorites, fetchFavorites } = useContext(FavoriteContext);
     const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
     // --- Admin state ---
     const [adminProducts, setAdminProducts] = useState([]);
     const [adminLoading, setAdminLoading] = useState(true);
     const navigate = useNavigate();
-    useEffect(() => {
-        //todo invertir roles después de pruebas
-        if (role == 'Administrador') {
-            const fetchUserData = async () => {
+            useEffect(() => {
+            if (role === 'Normal') {
+                const fetchUserData = async () => {
                 try {
                     setLoading(true);
+
                     const response = await fetch(`${urlBaseServer}/users`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
+                    headers: { Authorization: `Bearer ${token}` }
                     });
                     const users = await response.json();
                     const user = users.user.find(u => u.id === userId);
 
                     if (user) {
-                        const productsResponse = await fetch(`${urlBaseServer}/products`);
-                        const all_products = await productsResponse.json();
-                        const products = Array.isArray(all_products) ? all_products : all_products.products;
+                    fetchFavorites();
 
-                        setFavorites(products.filter(p => user.favorites?.includes(p.id)));
-                        setPurchases(products.filter(p => user.purchases?.includes(p.id)));
+                    //TODO: Se debe adaptar lógica de items pagados
+                    //const paid_cart = cart || []
+                    const userCarts = [];
+
+                    setPurchases(userCarts.length ? userCarts : []);
                     }
+
                 } catch (error) {
                     console.error("Error fetching user data:", error);
                 } finally {
                     setLoading(false);
                 }
-            };
-            fetchUserData();
-        }
-    }, [role, firstName, lastName]);
+                };
+
+                fetchUserData();
+            }
+            }, [role, firstName, lastName, token, userId]);
 
     // --- Fetch all products for admin view ---
     useEffect(() => {
-    //todo invertir roles después de pruebas
-        if (role == 'Administsrador') {
+        if (role == 'Administrador') {
             const fetchAllProducts = async () => {
                 try {
                     setAdminLoading(true);
@@ -231,7 +234,7 @@ const Profile = () => {
                                                                     <span className={`badge ${product.stock > 0 ? 'bg-success' : 'bg-secondary'}`}>
                                                                         {product.stock > 0 ? `Disponible: ${product.stock}` : 'Agotado'}
                                                                     </span>
-                                                                    <Link to={`/product/${product.id}`} className="btn btn-sm btn-outline-primary stretched-link">
+                                                                    <Link to={`/products/${product.id}`} className="btn btn-sm btn-outline-primary stretched-link">
                                                                         Ver Detalles
                                                                     </Link>
                                                                 </div>
@@ -246,7 +249,7 @@ const Profile = () => {
                                             <i className="bi bi-heart text-danger" style={{ fontSize: '3rem' }}></i>
                                             <h4 className="mt-3">No tienes favoritos aún</h4>
                                             <p className="text-muted">Guarda tus productos favoritos para verlos aquí</p>
-                                            <Link to="/productos" className="btn btn-danger mt-2">
+                                            <Link to="/products" className="btn btn-danger mt-2">
                                                 Explorar Productos
                                             </Link>
                                         </div>
@@ -295,7 +298,7 @@ const Profile = () => {
                                             <i className="bi bi-cart-x text-muted" style={{ fontSize: '3rem' }}></i>
                                             <h4 className="mt-3">No tienes compras registradas</h4>
                                             <p className="text-muted">Tus compras aparecerán aquí</p>
-                                            <Link to="/productos" className="btn btn-success mt-2">
+                                            <Link to="/products" className="btn btn-success mt-2">
                                                 Ver Catálogo
                                             </Link>
                                         </div>

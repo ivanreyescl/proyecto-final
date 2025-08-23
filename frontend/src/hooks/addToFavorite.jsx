@@ -4,31 +4,25 @@ import { FavoriteContext } from '../context/FavoriteContext';
 import { urlBaseServer } from '../server_config';
 
 export const useAddToFavorite = () => {
-  const { toggleFavorite, favorites } = useContext(FavoriteContext);
+  const { addToFavorite, removeFavorite, favorites } = useContext(FavoriteContext);
 
   const handleLike = async (product, e) => {
     if (e) e.preventDefault();
     try {
-      const response = await fetch(`${urlBaseServer}/products/like/${product.id}`, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Error al dar like al producto');
-      }
+      const isFavorite = favorites?.some(fav => fav.id === product.id);
 
-      toggleFavorite(product);
-      const isFavorite = favorites ? favorites.some(fav => fav.id === product.id) : false;
       if (!isFavorite) {
+        await addToFavorite(product.id, 1);
         toast.success('Producto agregado a favoritos');
       } else {
-        toast.warning('Producto eliminado de favoritos');
+        const favItem = favorites.find(fav => fav.id === product.id);
+        if (favItem) {
+          await removeFavorite(favItem.favoriteItemId);
+          toast.warning('Producto eliminado de favoritos');
+        }
       }
     } catch (error) {
-      toast.error('No se pudo agregar a favoritos');
+      toast.error('No se pudo actualizar favoritos');
       console.error(error);
     }
   };

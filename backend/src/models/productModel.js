@@ -17,7 +17,6 @@ export const getProductsModel = async () => {
   `;
   
   const response = await pool.query(sqlQuery);
-  console.log(response.rows);
   return response.rows;
 };
 

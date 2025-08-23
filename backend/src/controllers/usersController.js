@@ -1,6 +1,6 @@
 
 import { registerUserModel, getUserModel, loginModel } from '../models/usersModel.js'
-
+import jwt from 'jsonwebtoken'
 
 export const getUser = async (req, res) => {
   try {
@@ -34,12 +34,17 @@ export const loginUser = async (req, res) => {
       id: user.id,
       email: user.email,
       firstName: user.first_name, // <-- mapeo correcto
-      lastName: user.last_name,   // <-- mapeo correcto
+      lastName: user.last_name,     // <-- mapeo correcto
       role_description: user.role_description || '',
-      // agrega otros campos si necesitas
     };
 
-    res.json({ message: 'Inicio de sesión exitoso', user: userFrontend });
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWTSECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({ message: 'Inicio de sesión exitoso', user: userFrontend, token });
   } catch (error) {
     console.error('Error =>', error);
     res.status(500).json({ error: 'Error al procesar la solicitud' });

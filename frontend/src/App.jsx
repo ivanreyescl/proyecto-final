@@ -26,48 +26,46 @@ const App = () => {
             <FavoriteProvider>
               <CartProvider>
                 <ProductsProvider>
-                  <Navbar/>
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/register" element={
-                        <ProtectedRoute>
-                          <Register />
-                        </ProtectedRoute>
-                        }
-                      />
-                      <Route path="/login" element={
-                        <ProtectedRoute>
-                          <Login />
-                        </ProtectedRoute>
-                        }
-                      />
-                      <Route path="/products" element={
-                          <Products />
-                        }
-                      />
-                      <Route path="/products/new" element={
-                          <CategoryProvider>
+                  <CategoryProvider>
+                    <Navbar/>
+                      <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/register" element={
+                          <ProtectedRoute>
+                            <Register />
+                          </ProtectedRoute>
+                          }
+                        />
+                        <Route path="/login" element={
+                          <ProtectedRoute>
+                            <Login />
+                          </ProtectedRoute>
+                          }
+                        />
+                        <Route path="/products" element={
+                            <Products />
+                          }
+                        />
+                        <Route path="/products/new" element={
                             <ProductsForms />
-                          </CategoryProvider>
-                        } 
-                      />
-                      <Route path="/products/edit/:id" element={
-                          <CategoryProvider>
+                          } 
+                        />
+                        <Route path="/products/edit/:id" element={
                             <ProductsForms />
-                          </CategoryProvider>
-                        } 
-                      />
-                      <Route path="/cart" element={<Cart /> }/>                  
-                      <Route path="/products/:id" element={<Product />} />
-                      <Route path="/profile" element={
-                        <ProtectedRoute>
-                          <Profile />
-                        </ProtectedRoute>
-                        } 
-                      />
-                      <Route path="/404" element={<NotFound />} />
-                    </Routes>
-                  <Footer/>
+                          } 
+                        />
+                        <Route path="/cart" element={<Cart /> }/>                  
+                        <Route path="/products/:id" element={<Product />} />
+                        <Route path="/profile" element={
+                          <ProtectedRoute>
+                            <Profile />
+                          </ProtectedRoute>
+                          } 
+                        />
+                        <Route path="/404" element={<NotFound />} />
+                      </Routes>
+                    <Footer/>
+                  </CategoryProvider>
                 </ProductsProvider>
               </CartProvider>
             </FavoriteProvider>

@@ -1,10 +1,6 @@
 header {
-    min-height: 250px;
-    max-height: 450px;
-    background-blend-mode: overlay;
-    background-image: url('../public/Header.jpg');
-    background-size: cover;
-    background-position: center;
+    min-height: 450px;
+    max-height: 650px;
 }
 hr {
     opacity: calc(0.1);

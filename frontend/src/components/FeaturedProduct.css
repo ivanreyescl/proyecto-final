@@ -1,3 +1,11 @@
+.card-carousel-img {
+  display: flex;
+  overflow-x: auto;
+  width: 350px;
+  height: 300px;
+  scroll-snap-type: x mandatory;
+}
+
 .featured-card {
   position: relative;
   opacity: 0;

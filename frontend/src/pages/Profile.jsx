@@ -6,7 +6,7 @@ import { urlBaseServer } from '../server_config';
 import Button from '../components/Button';
 
 const Profile = () => {
-    const { firstName, lastName, role, logout } = useContext(UserContext);
+    const { firstName, lastName, role, logout, userId, token } = useContext(UserContext);
     const { deleteProduct } = useContext(ProductContext);
     const [favorites, setFavorites] = useState([]);
     const [purchases, setPurchases] = useState([]);
@@ -15,19 +15,25 @@ const Profile = () => {
     const [adminProducts, setAdminProducts] = useState([]);
     const [adminLoading, setAdminLoading] = useState(true);
     const navigate = useNavigate();
-
     useEffect(() => {
-        if (role == 'Normal') {
+        //todo invertir roles después de pruebas
+        if (role == 'Administrador') {
             const fetchUserData = async () => {
                 try {
                     setLoading(true);
-                    const response = await fetch(`${urlBaseServer}/users`);
+                    const response = await fetch(`${urlBaseServer}/users`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
                     const users = await response.json();
-                    const user = users.find(u => u.firstName === firstName && u.lastName === lastName);
+                    const user = users.user.find(u => u.id === userId);
 
                     if (user) {
                         const productsResponse = await fetch(`${urlBaseServer}/products`);
-                        const products = await productsResponse.json();
+                        const all_products = await productsResponse.json();
+                        const products = Array.isArray(all_products) ? all_products : all_products.products;
+                        debugger
                         setFavorites(products.filter(p => user.favorites?.includes(p.id)));
                         setPurchases(products.filter(p => user.purchases?.includes(p.id)));
                     }
@@ -43,14 +49,15 @@ const Profile = () => {
 
     // --- Fetch all products for admin view ---
     useEffect(() => {
-        if (role == 'Administrador') {
+    //todo invertir roles después de pruebas
+        if (role == 'Administsrador') {
             const fetchAllProducts = async () => {
                 try {
                     setAdminLoading(true);
                     const response = await fetch(`${urlBaseServer}/products`);
                     const products = await response.json();
                     //const normalized = Array.isArray(products[0]) ? products[0] : products;
-                    const normalized = Array.isArray(products) ? products : [];
+                    const normalized = Array.isArray(products) ? products : products.products;
                     setAdminProducts(normalized);
                 } catch (error) {
                     console.error("Error fetching products for admin:", error);
@@ -63,7 +70,18 @@ const Profile = () => {
     }, [role]);
 
     const handleDeleteProduct = async (id) => {
-        const confirmed = window.confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.');
+        // Usar SweetAlert2 para confirmación
+        const Swal = (await import('sweetalert2')).default;
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        });
+        const confirmed = result.isConfirmed;
         if (!confirmed) return;
 
         try {
@@ -80,7 +98,7 @@ const Profile = () => {
     };
 
     const handleEditProduct = (id) => {
-        navigate(`/products/${id}`);
+        navigate(`/products/edit/${id}`);
     };
 
     const formatPrice = (price) => {

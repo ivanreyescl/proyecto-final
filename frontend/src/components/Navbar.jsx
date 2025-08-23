@@ -9,39 +9,37 @@ const Navbar = () => {
     const { totalPrice } = useContext(CartContext)
     const formattedTotal = totalPrice.toLocaleString()
     return (
-        <nav className="navbar navbar-expand-lg bg-dark text-white">
-            <div className="container-fluid justify-content-end">
-                <li className="nav-item-title me-3">
-                    <Link className="nav-link text-white" to="/">¡ Pc Components!</Link>
-                </li>
-                <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row align-items-center">
-                    {/* 
-                        <li className="nav-item-box me-3">
-                            <Link className="nav-link text-white" to="/product/p001">Products</Link>
-                        </li>
-                    */}
-                    <li className="nav-item me-3">
-                        <Link className="nav-link text-white" to={token ? "/profile" : "/login"}>
-                            {token ? "👤 Perfil" : " Iniciar Sesión"}
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+            <div className="container-fluid">
+                <Link className="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3" to="/">
+                    ¡Pc Components!
+                </Link>
+                <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row align-items-center gap-3">
+                    <li className="nav-item">
+                        <Link className="nav-link d-flex align-items-center" to={token ? "/profile" : "/login"}>
+                            {token ? <><span className="me-1">👤</span>Perfil</> : "Iniciar Sesión"}
                         </Link>
                     </li>
-                    <li className="nav-item me-3">
+                    <li className="nav-item">
                         {token ? (
                             <Link className="nav-link text-white" to="/" onClick={logout}>
                                 Cerrar Sesión
                             </Link>
                         ) : (
-                            <Link className="nav-link text-white" to="/register">
+                            <Link className="btn" to="/register">
                                 Registrarse
                             </Link>
                         )}
                     </li>
-                    <li className="nav-item me-3">
-                        <Link className="nav-link text-white" to="/products">Productos</Link>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/products">
+                            Productos
+                        </Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link text-white" id="total_product" to="/cart">
-                            🛒 ${formattedTotal}
+                        <Link className="btn position-relative" id="total_product" to="/cart">
+                            🛒
+                            <span className="ms-2">${formattedTotal}</span>
                         </Link>
                     </li>
                 </ul>

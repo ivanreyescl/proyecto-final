@@ -29,9 +29,7 @@ export const UserProvider = ({ children }) => {
         try {
             const URL = `${urlBaseServer}/login`;
             const { data } = await axios.post(URL, { email, password });
-
-            // json-server-auth devuelve: accessToken y user
-            setToken(data.accessToken);
+            setToken(data.token);
             setUserId(data.user.id);
             setEmail(data.user.email);
             setFirstName(data.user.firstName || '');
@@ -39,7 +37,7 @@ export const UserProvider = ({ children }) => {
             setRole(data.user.role_description || '');
 
             localStorage.setItem('userId', data.user.id);
-            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('token', data.token);
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('firstName', data.user.firstName || '');
             localStorage.setItem('lastName', data.user.lastName || '');
@@ -58,13 +56,13 @@ export const UserProvider = ({ children }) => {
             const URL = `${urlBaseServer}/register`;
             const { data } = await axios.post(URL, { email, firstName, lastName, password });
 
-            setToken(data.accessToken);
+            setToken(data.token);
             setEmail(data.user.email);
             setFirstName(data.user.firstName || '');
             setLastName(data.user.lastName || '');
             setRole(data.user.role || '');
 
-            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('token', data.token);
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('userId', data.user.id);
             localStorage.setItem('firstName', data.user.firstName || '');

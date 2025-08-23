@@ -5,26 +5,36 @@
     transition: background-color 0.3s ease;
 }
 
+.navbar {
+        background-image: url('../public/Navbar2.png');
+        background-blend-mode: overlay;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.9;
+        border: 2px solid black;
+}
+
 .nav-item-box:hover {
-    background-color: #e0e0e0;
+    background-color: #ffffff;
 }
 .nav-link {
-    color: white !important;
+    color: rgb(255, 255, 255) !important;
     text-decoration: none;
 }
 .nav-link:visited,
 .nav-link:active,
 .nav-link:hover {
-    color: white !important;
+    color: rgb(255, 255, 255) !important;
 }
 
 .navbar a {
-    color: white !important;
+    color: rgb(255, 255, 255) !important;
     text-decoration: none;
 }
 
 .navbar a:visited,
 .navbar a:active,
 .navbar a:hover {
-    color: white !important
+    color: rgb(255, 255, 255) !important;
+    font-weight: bold;
 }

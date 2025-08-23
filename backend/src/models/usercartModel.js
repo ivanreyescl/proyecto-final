@@ -66,7 +66,6 @@ export const addCartItemModel = async (userId, productId, quantity) => {
         'SELECT id, quantity FROM cartitems WHERE user_cart_id = $1 AND product_id = $2',
         [cartId, productId]
     );
-    console.log(existingItem.rows.length > 0)
     if (existingItem.rows.length > 0) {
         const updated = await pool.query(
             'UPDATE cartitems SET quantity = quantity + 1 WHERE id = $1 RETURNING *',

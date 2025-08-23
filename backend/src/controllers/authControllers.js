@@ -19,7 +19,6 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ email }, process.env.JWTSECRET, {
       expiresIn: '120s'
     })
-
     return res.status(200).json({ token })
   } catch (error) {
     res.status(500).json({ error: error.message })

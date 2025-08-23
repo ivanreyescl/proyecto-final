@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/UserContext.jsx';
 
 const Register = () => {
     const [user, setUser] = useState({

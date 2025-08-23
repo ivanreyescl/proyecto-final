@@ -10,14 +10,14 @@ const Cart = () => {
         if (!userId) return alert('Debes iniciar sesión para pagar');
 
         try {
-            //const response = await fetch(`${process.env.REACT_APP_API_URL}/checkouts`, {
-            //    method: 'POST',
-            //    headers: {
-            //        'Content-Type': 'application/json',
-            //        Authorization: `Bearer ${token}`
-            //    },
-            //    body: JSON.stringify({ user_id: userId })
-            //});
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/checkouts`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ user_id: userId })
+            });
 
             const data = await response.json();
             alert(data.message || 'Pago procesado correctamente');

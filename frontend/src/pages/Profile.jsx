@@ -6,11 +6,13 @@ import { FavoriteContext } from '../context/FavoriteContext';
 import { ProductContext } from '../context/ProductsContext';
 import { urlBaseServer } from '../server_config';
 import Button from '../components/Button';
+import { useAddToFavorite } from "../hooks/addToFavorite";
 
 const Profile = () => {
     const { firstName, lastName, role, logout, userId, token } = useContext(UserContext);
     const { deleteProduct } = useContext(ProductContext);
     const { cart } = useContext(CartContext);
+    const { handleLike } = useAddToFavorite();
     const { favorites, fetchFavorites } = useContext(FavoriteContext);
     const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -228,6 +230,13 @@ const Profile = () => {
                                                         <div className="card-body d-flex flex-column">
                                                             <h5 className="card-title fs-6 text-truncate">{product.name}</h5>
                                                             <p className="card-text small text-muted mb-2 line-clamp-2">{product.detail}</p>
+                                                            <button
+                                                                className="favorite-item"
+                                                                onClick={(e) => handleLike({ id: product.id, name: product.name, price: product.price, image: product.image, detail: product.detail, category: product.category }, e)}
+                                                                style={{ background: 'none', border: 'none', padding: 0, display: token ? 'block' : 'none' }}
+                                                            >
+                                                                <i className={`fas fa-heart`}></i>
+                                                            </button>
                                                             <div className="mt-auto">
                                                                 <h4 className="text-primary fw-bold mb-2">{formatPrice(product.price)}</h4>
                                                                 <div className="d-flex justify-content-between align-items-center">

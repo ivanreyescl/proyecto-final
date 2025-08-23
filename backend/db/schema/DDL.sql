@@ -1,6 +1,6 @@
-CREATE DATABASE pccomponents;
+--CREATE DATABASE pccomponents;
 
-\c pccomponents;
+--\c pccomponents;
 
 -- Tabla Users
 CREATE TABLE Users (
@@ -73,3 +73,18 @@ CREATE TABLE CartItems (
     product_id INTEGER REFERENCES Products(id),
     quantity INTEGER
 );
+
+-- Tabla FavoriteItems delete on cascade
+ALTER TABLE favoriteitems
+DROP CONSTRAINT favoriteitems_product_id_fkey,
+ADD CONSTRAINT favoriteitems_product_id_fkey
+FOREIGN KEY (product_id)
+REFERENCES products(id)
+ON DELETE CASCADE;
+-- Tabla Cart Items delete on cascade
+ALTER TABLE cartitems
+DROP CONSTRAINT cartitems_product_id_fkey,
+ADD CONSTRAINT cartitems_product_id_fkey
+FOREIGN KEY (product_id)
+REFERENCES products(id)
+ON DELETE CASCADE;

@@ -21,13 +21,22 @@ export const getProductsModel = async () => {
 };
 
 export const createProductModel = async (name, image, detail, price, stock, category) => {
+  await pool.query(`
+    SELECT setval(
+      pg_get_serial_sequence('products', 'id'),
+      COALESCE((SELECT MAX(id) FROM products), 0) + 1,
+      false
+    )
+  `);
+
   const sqlQuery = {
-    text: 'INSERT INTO PRODUCTS (name, image, detail, price, stock, category_id) values ($1,$2,$3,$4,$5,$6) RETURNING *',
+    text: 'INSERT INTO products (name, image, detail, price, stock, category_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
     values: [name, image, detail, price, stock, category]
-  }
-  const result = await pool.query(sqlQuery)
-  return result.rows
-}
+  };
+
+  const result = await pool.query(sqlQuery);
+  return result.rows[0];
+};
 
 export const deleteProductModel = async (id) => {
   const sqlQuery = {

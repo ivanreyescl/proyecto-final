@@ -47,7 +47,6 @@ const FavoriteProvider = ({ children }) => {
       });
       const item = await response.json();
       await fetchFavorites();
-      returnSuccess("Producto agregado a favoritos");
       return item;
     } catch (error) {
       console.error(error);
@@ -64,7 +63,6 @@ const FavoriteProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` }
       });
       await fetchFavorites();
-      returnSuccess("Producto eliminado de favoritos");
     } catch (error) {
       console.error(error);
       returnAlert("Error al eliminar favorito");

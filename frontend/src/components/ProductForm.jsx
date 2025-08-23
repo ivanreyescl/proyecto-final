@@ -16,7 +16,8 @@ const RegisterProduct = () => {
         code: '',
         price: '',
         image: '',
-        category_id: ''
+        category_id: '',
+        stock: ''
     });
 
     useEffect(() => {
@@ -29,7 +30,8 @@ const RegisterProduct = () => {
                     code: prodToEdit.code || '',
                     price: prodToEdit.price || '',
                     image: prodToEdit.image || '',
-                    category_id: prodToEdit.category_id || ''
+                    category_id: prodToEdit.category_id || '',
+                    stock: prodToEdit.stock || ''
                 });
             } else {
                 toast.error('Producto no encontrado');
@@ -47,18 +49,19 @@ const RegisterProduct = () => {
 
     const handleSubmit = async (e) => { 
         e.preventDefault();
-        const { name, detail, code, price, category_id, image } = product;
+        const { name, detail, code, price, category_id, image, stock } = product;
 
         if (!name.trim()) return returnAlert('El nombre es obligatorio');
         if (!price || isNaN(price) || Number(price) <= 0) return returnAlert('Precio inválido');
         if (!category_id) return returnAlert('La categoría es obligatoria');
+        if (!stock || isNaN(stock) || Number(stock) < 0) return returnAlert('Stock inválido');
 
         try {
         if (id) {
-            await update(id, { name, detail, code, price, image, category: Number(category_id) });
+            await update(id, { name, detail, code, price, image, category: Number(category_id), stock: Number(stock) });
             returnSuccess('Producto actualizado con éxito');
         } else {
-            await register({ name, detail, code, price, image, category: Number(category_id) });
+            await register({ name, detail, code, price, image, category: Number(category_id), stock: Number(stock) });
             returnSuccess('Producto registrado con éxito');
             setProduct({
             name: '',
@@ -66,7 +69,8 @@ const RegisterProduct = () => {
             code: '',
             price: '',
             image: '',
-            category_id: ''
+            category_id: '',
+            stock: ''
             });
             }
             navigate('/products');
@@ -184,13 +188,27 @@ const RegisterProduct = () => {
                         required
                         />
                     </div>
+                    <div className="col-md-6 mb-3">
+                        <label htmlFor="stock" className="form-label">Stock</label>
+                        <input
+                        type="number"
+                        className="form-control"
+                        id="stock"
+                        name="stock"
+                        value={product.stock}
+                        onChange={handleChange}
+                        placeholder="Ingrese el stock"
+                        min="0"
+                        required
+                        />
+                    </div>
                 </div>
                 <div className="mb-3 d-flex justify-content-between">
                     <Button
                         type="submit"
                         label={id ? 'Actualizar Producto' : 'Registrar Producto'}
                         icon={id ? 'fa fa-save' : 'fa fa-plus'}
-                        disabled={!product.name.trim() || !product.price || !product.category_id}
+                        disabled={!product.name.trim() || !product.price || !product.category_id || !product.stock}
                     />
                     <Link to="/products">
                         <Button label="Volver" icon="fa fa-arrow-left" />

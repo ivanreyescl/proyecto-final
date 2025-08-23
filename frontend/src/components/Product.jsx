@@ -67,6 +67,7 @@ const Product = () => {
                                     ingredients={p.ingredients}
                                     image={p.image}
                                     category={p.category_name}
+                                    stock={p.stock}
                                 />
                             </div>
                         ))}

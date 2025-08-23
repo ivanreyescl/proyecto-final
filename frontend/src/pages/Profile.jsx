@@ -33,7 +33,7 @@ const Profile = () => {
                         const productsResponse = await fetch(`${urlBaseServer}/products`);
                         const all_products = await productsResponse.json();
                         const products = Array.isArray(all_products) ? all_products : all_products.products;
-                        debugger
+
                         setFavorites(products.filter(p => user.favorites?.includes(p.id)));
                         setPurchases(products.filter(p => user.purchases?.includes(p.id)));
                     }

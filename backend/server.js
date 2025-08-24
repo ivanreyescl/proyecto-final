@@ -14,12 +14,21 @@ const FRONTPORT = process.env.FRONTPORT || 5173
 
 const app = express()
 
+const allowedOrigins = [
+  `http://localhost:${FRONTPORT}`, //local
+  'https://proyecto-final-bice-one.vercel.app' //prod
+];
+
 app.use(cors({
-    // ${FRONTPORT} == frontend (5173 x defecto en vite)
-    // ${PORT} == backend (5000 x defecto)
-    origin: `https://proyecto-final-bice-one.vercel.app/`,
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        } else {
+        callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true
-}))
+}));
 
 app.use(express.json())
 

@@ -7,6 +7,7 @@ import { ProductContext } from '../context/ProductsContext';
 import { urlBaseServer } from '../server_config';
 import Button from '../components/Button';
 import { useAddToFavorite } from "../hooks/addToFavorite";
+import Swal from "sweetalert2";
 
 const Profile = () => {
     const { first_name, last_name, role, logout, userId, token } = useContext(UserContext);
@@ -135,6 +136,52 @@ const Profile = () => {
             );
         } catch (error) {
             console.error('Error actualizando rol:', error);
+        }
+    };
+
+    const handleDeleteUser = async (userId) => {
+        try {
+            const { isConfirmed } = await Swal.fire({
+                title: "¿Estás seguro?",
+                text: "No podrás revertir esta acción",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar",
+            });
+
+            if (!isConfirmed) return;
+
+            const res = await fetch(`${urlBaseServer}/users/${userId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || "Error eliminando usuario");
+            }
+
+            setAdminUsers((prev) => prev.filter((user) => user.id !== userId));
+
+            Swal.fire({
+                icon: "success",
+                title: "Usuario eliminado",
+                text: "El usuario ha sido eliminado correctamente",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        } catch (err) {
+            console.error(err);
+
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Ocurrió un error al eliminar el usuario",
+            });
         }
     };
 

@@ -25,6 +25,26 @@ export const getUserModel = async (email) => {
   return response.rows;
 };
 
+export const getAllUsersModel = async () => {
+  const sqlQuery = {
+    text: `
+      SELECT
+        u.id, u.email, u.first_name, u.last_name,
+        ur.id AS user_role_id,
+        ur.name AS user_role_name,
+        r.id AS role_id,
+        r.description AS role_description,
+        r.superuser
+      FROM Users u
+      LEFT JOIN UserRoles ur ON ur.user_id = u.id
+      LEFT JOIN Roles r ON r.id = ur.role_id
+    `
+  };
+
+  const response = await pool.query(sqlQuery);
+  return response.rows;
+};
+
 export const loginModel = async (email, password) => {
   const user = await getUserModel(email);
   if (user.length === 0) return null;

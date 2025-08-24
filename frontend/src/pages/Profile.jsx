@@ -19,6 +19,7 @@ const Profile = () => {
     // --- Admin state ---
     const [adminProducts, setAdminProducts] = useState([]);
     const [adminLoading, setAdminLoading] = useState(true);
+    const [adminUsers, setAdminUsers] = useState([]);
     const navigate = useNavigate();
             useEffect(() => {
             if (role === 'Normal') {
@@ -71,6 +72,23 @@ const Profile = () => {
                 }
             };
             fetchAllProducts();
+            const fetchAllUsers = async () => {
+                try {
+                    setAdminLoading(true);
+                    const response = await fetch(`${urlBaseServer}/users`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    const users = await response.json();
+                    console.log(users)
+                    const normalized = Array.isArray(users) ? users : users.users;
+                    setAdminUsers(normalized);
+                } catch (error) {
+                    console.error("Error fetching users for admin:", error);
+                } finally {
+                    setAdminLoading(false);
+                }
+            };
+            fetchAllUsers();
         }
     }, [role]);
 
@@ -136,6 +154,92 @@ const Profile = () => {
                             <Button label="Agregar Producto" icon="fa fa-plus" />
                         </Link>
                     </div>
+                    <div className="card shadow-sm">
+                        <div className="card-header">
+                            <h5 className="mb-0">Usuarios registrados</h5>
+                        </div>
+                    </div>
+                    <div className="card-body">
+                            {adminLoading ? (
+                                <div className="text-center py-4">
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            ) : adminUsers.length === 0 ? (
+                                <div className="text-center py-4">
+                                    <p className="mb-0">No hay usuarios registrados.</p>
+                                </div>
+                            ) : (
+                                <div className="list-group">
+                                    {adminUsers.map(user => (
+                                        <div key={user.id} className="list-group-item d-flex align-items-center justify-content-between">
+                                            <div className="d-flex align-items-center gap-3">
+                                                <img
+                                                    src={user.image}
+                                                    alt={user.name}
+                                                    style={{ width: 64, height: 64, objectFit: 'contain', borderRadius: 6 }}
+                                                    className="bg-light p-1"
+                                                />
+                                                <div>
+                                                    <div className="fw-semibold">{user.name}</div>
+                                                    <small className="text-muted">{user.email} • {user.role}</small>
+                                                </div>
+                                            </div>
+
+                                            <div className="d-flex gap-2 align-items-center">
+                                                <select
+                                                    type="button"
+                                                    className="btn btn-sm btn-primary"
+                                                    onClick={() => handleUserRole(user.id)}
+                                                >
+                                                    Editar
+                                                </select>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-danger"
+                                                    onClick={() => handleDeleteUser(user.id)}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <div className="card shadow-sm">
                         <div className="card-header">

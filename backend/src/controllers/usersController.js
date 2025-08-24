@@ -1,5 +1,5 @@
 
-import { registerUserModel, getUserModel, loginModel } from '../models/usersModel.js'
+import { registerUserModel, getUserModel, loginModel,getAllUsersModel } from '../models/usersModel.js'
 import jwt from 'jsonwebtoken'
 
 export const getUser = async (req, res) => {
@@ -7,6 +7,15 @@ export const getUser = async (req, res) => {
     const email = req.user
     const user = await getUserModel(email)
     res.json({ user })
+  } catch (error) {
+    res.json({ error: 'Error al procesar la solicitud' })
+  }
+}
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await getAllUsersModel()
+    res.json({ users })
   } catch (error) {
     res.json({ error: 'Error al procesar la solicitud' })
   }

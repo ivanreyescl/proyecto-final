@@ -150,6 +150,15 @@ const Profile = () => {
         }).format(price);
     };
 
+    const uniqueRolesArray = Array.from(
+        new Map(
+            adminUsers
+            .filter(u => u.role_description)
+            .map(u => [u.role_id, { role_id: u.role_id, role_description: u.role_description }])
+        ).values()
+    );
+
+
     return (
         <div className="container py-4">
             {/* Header */}
@@ -199,14 +208,11 @@ const Profile = () => {
                                                     onChange={(e) => handleRoleChange(user.id, e.target.value)}
                                                 >
                                                 <option value="">Sin rol</option>
-                                                {adminUsers
-                                                .filter(u => u.role_description)
-                                                .map(u => (
-                                                    <option key={u.role_id} value={u.role_id}>
-                                                    {u.role_description}
+                                                {uniqueRolesArray.map(role => (
+                                                    <option key={role.role_id} value={role.role_id}>
+                                                    {role.role_description}
                                                     </option>
-                                                ))
-                                                }
+                                                ))}
                                             </select>
 
                                             <button

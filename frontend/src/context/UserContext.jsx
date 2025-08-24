@@ -90,6 +90,10 @@ export const UserProvider = ({ children }) => {
         localStorage.removeItem('lastName');
         localStorage.removeItem('role');
         returnSuccess('Se ha cerrado sesión');
+        
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 2000);
     };
 
     const profile = async () => {

@@ -6,7 +6,7 @@
 }
 
 .navbar {
-        background-image: url('../public/Navbar2.png');
+        background-image: url('../Navbar2.png');
         background-blend-mode: overlay;
         background-size: cover;
         background-position: center;

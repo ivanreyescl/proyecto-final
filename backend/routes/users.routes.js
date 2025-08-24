@@ -9,7 +9,7 @@ const router = Router();
 
 router.get('/users', verifyToken, getUser);
 router.get('/users/all', verifyToken, getAllUsers);
-router.post('/users/:id/role', verifyToken, updateUserRole);
+router.put('/users/:id/role', verifyToken, updateUserRole);
 router.delete('/users/:id', verifyToken, deleteUser);
 router.post('/register', createUserMiddleware, registerUser);
 router.post('/login', validateLoginInput, loginUser);

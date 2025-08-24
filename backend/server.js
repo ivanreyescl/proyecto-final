@@ -4,10 +4,8 @@ import 'dotenv/config'
 
 import productRoutes from './routes/products.routes.js'
 import userRoutes from './routes/users.routes.js'
-import authRoutes from './routes/auth.routes.js'
 import usercartRoutes from './routes/usercarts.routes.js'
 import userfavoriteRoutes from './routes/userfavorites.routes.js'
-
 import categoryRoutes from './routes/categories.routes.js'
 
 
@@ -30,13 +28,13 @@ app.use(productRoutes)
 
 app.use('/', userRoutes)
 app.use(categoryRoutes)
-app.use('/auth', authRoutes)
-
 app.use(userfavoriteRoutes)
-app.use(categoryRoutes)
+
 app.use(usercartRoutes)
 
 
 app.listen(PORT, () => {
     console.log(`🔥 Server on 🔥 http://localhost:${PORT}`)
 })
+
+export default app

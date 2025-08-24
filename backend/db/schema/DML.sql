@@ -32,3 +32,6 @@ INSERT INTO products (id, name, code, price, stock, image, detail, category_id) 
 (18, 'Tarjeta Gráfica NVIDIA GeForce RTX 3080', NULL, 799990, 6, 'https://media.solotodo.com/media/products/1278793_picture_1606622397.jpg', 'GPU NVIDIA RTX 3080 con 10GB GDDR6X y soporte para ray tracing. Excelente para gaming 4K, realidad virtual y producción multimedia avanzada.', 2),
 (19, 'Memoria RAM TeamGroup T-Force Delta RGB 32GB (2x16GB) DDR5 6000MHz', NULL, 229990, 8, 'https://http2.mlstatic.com/D_NQ_NP_971445-MLU70799869862_082023-O.webp', 'Memoria RAM TeamGroup T-Force Delta RGB DDR5 a 6000MHz con latencia CL36 e iluminación RGB. Ideal para equipos modernos que requieren máxima velocidad y estética personalizable.', 3),
 (20, 'Memoria RAM Kingston Fury Beast 64GB (2x32GB) DDR5 5600MHz', NULL, 399990, 4, 'https://http2.mlstatic.com/D_NQ_NP_998623-MLU73080195403_112023-O.webp', 'Memoria RAM Kingston Fury Beast DDR5 a 5600MHz con latencia CL40, ideal para estaciones de trabajo y sistemas de alto rendimiento que necesitan gran capacidad', 3);
+
+
+SELECT setval('products_id_seq', (SELECT MAX(id) FROM products) + 1);

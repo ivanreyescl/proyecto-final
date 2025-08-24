@@ -32,6 +32,7 @@ const Product = () => {
                     image={selectedProduct.image}
                     detail={selectedProduct.detail}
                     category={selectedProduct.category_name}
+                    stock={selectedProduct.stock}
                 />
                 </div>
             </div>
@@ -66,6 +67,7 @@ const Product = () => {
                                     ingredients={p.ingredients}
                                     image={p.image}
                                     category={p.category_name}
+                                    stock={p.stock}
                                 />
                             </div>
                         ))}

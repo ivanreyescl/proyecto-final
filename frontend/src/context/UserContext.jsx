@@ -35,18 +35,17 @@ export const UserProvider = ({ children }) => {
             setFirstName(data.user.firstName || '');
             setLastName(data.user.lastName || '');
             setRole(data.user.role_description || '');
-
             localStorage.setItem('userId', data.user.id);
             localStorage.setItem('token', data.token);
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('firstName', data.user.firstName || '');
             localStorage.setItem('lastName', data.user.lastName || '');
-            localStorage.setItem('role', data.user.role_description || '');
+            localStorage.setItem('role', data.user.role_description || 'Normal');
 
-            returnSuccess('Usuario registrado exitosamente, sesión iniciada automáticamente.');
+            returnSuccess('Sesión iniciada.');
             return true;
         } catch (error) {
-            returnAlert(error.response?.data || 'Error en la autenticación');
+            returnAlert(error.response?.data.error || 'Error en la autenticación');
             return false;
         }
     };
@@ -60,14 +59,14 @@ export const UserProvider = ({ children }) => {
             setEmail(data.user.email);
             setFirstName(data.user.firstName || '');
             setLastName(data.user.lastName || '');
-            setRole(data.user.role || '');
+            setRole(data.user.role_description || 'Normal');
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('userId', data.user.id);
             localStorage.setItem('firstName', data.user.firstName || '');
             localStorage.setItem('lastName', data.user.lastName || '');
-            localStorage.setItem('role', data.user.role || '');
+            localStorage.setItem('role', data.user.role_description || 'Normal');
 
             returnSuccess('Usuario registrado exitosamente, sesión iniciada automáticamente.');
             return true;

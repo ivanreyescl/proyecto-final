@@ -55,7 +55,6 @@ const CartProvider = ({ children }) => {
                 body: JSON.stringify({ product_id: product.id, quantity: 1 })
             });
             if (response.ok) {
-                returnSuccess('Producto agregado al carrito');
                 fetchCart();
             }
         } catch (error) {

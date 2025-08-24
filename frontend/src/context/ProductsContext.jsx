@@ -25,7 +25,6 @@ const ProductsProvider = ({ children }) => {
     }
 }
 
-    // TODO: Estas acciones las debe manejar el backend, solo se agregaron para mostrar el funcionamiento de las vistas.
     const register = async (createdProduct) => {
         // TODO: Se debe habilitar el registro de imágenes en una nube, de momento arroja una imagen random
         createdProduct.image = "https://picsum.photos/200/300?random=" + Math.floor(Math.random() * 1000);

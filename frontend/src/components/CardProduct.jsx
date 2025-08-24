@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { useAddToFavorite } from "../hooks/addToFavorite";
 import { FavoriteContext } from "../context/FavoriteContext";
 
-const CardProduct = ({ id, name, price, image, detail, category }) => {
+const CardProduct = ({ id, name, price, image, detail, category, stock }) => {
   const addToCartHandler = useAddToCart();
   const formattedPrice = price.toLocaleString()
   const capitalizedName = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
@@ -36,17 +36,26 @@ const CardProduct = ({ id, name, price, image, detail, category }) => {
             <strong> ${formattedPrice} CLP</strong>
           </p>
           <hr />
-            <Button 
-              label="Agregar al carrito" 
-              onClick={() => addToCartHandler({ id, name, price, image, detail, category })}
-            />
+            {stock > 0 ? (
+              <Button
+                label="Agregar al carrito"
+                icon="fa fa-cart-plus"
+                onClick={() => addToCartHandler({ id, name, price, image, detail, category })}
+              />
+            ) : (
+              <Button
+                label="Agotado :("
+                icon="fa fa-ban"
+                disabled
+              />
+            )}
         </div>
     </div>
   )
 }
 
 
-const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
+const CardProductDetailed = ({ id, name, price, image, detail, category, stock }) => {
   const { role } = useContext(UserContext)
   const formattedPrice = price.toLocaleString()
   const capitalizedName = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
@@ -86,6 +95,11 @@ const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
             className="card-img-top-single "
             alt={name}
           />
+        </div>
+        <div className="card-text d-flex text-left flex-column justify-content-start">
+          <span className={`badge ${stock > 0 ? 'bg-success' : 'bg-secondary'}`}>
+                {stock > 0 ? `Quedan: ${stock} !` : 'Agotado'}
+          </span>
         </div>  
         <div className="card-body card-text d-flex flex-column justify-content-center">
           <hr />
@@ -109,11 +123,19 @@ const CardProductDetailed = ({ id, name, price, image, detail, category }) => {
             </button>
           </div>
           <div className="container mt-5 d-flex justify-content-between align-items-center">
-            <Button 
-              label="Agregar al carrito"
-              icon="fa fa-cart-plus" 
-              onClick={() => addToCartHandler({ id, name, price, image, detail, category })}
-            />
+            {stock > 0 ? (
+              <Button
+                label="Agregar al carrito"
+                icon="fa fa-cart-plus"
+                onClick={() => addToCartHandler({ id, name, price, image, detail, category })}
+              />
+            ) : (
+              <Button
+                label="Agotado :("
+                icon="fa fa-ban"
+                disabled
+              />
+            )}
             {role === 'Administrador' ? (
               <>
                 <Link to={`/products/edit/${id}`}>

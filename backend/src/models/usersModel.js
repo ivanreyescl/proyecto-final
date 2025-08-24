@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 export const getUserModel = async (email) => {
   const sqlQuery = {
     text: `
-      SELECT 
+      SELECT
         u.id, u.email, u.password, u.first_name, u.last_name, u.inactive,
         ur.id AS user_role_id,
         ur.name AS user_role_name,

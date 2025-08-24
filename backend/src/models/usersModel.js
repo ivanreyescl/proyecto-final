@@ -25,6 +25,51 @@ export const getUserModel = async (email) => {
   return response.rows;
 };
 
+export const updateUserRoleModel = async (id, role_id) => {
+  const checkQuery = {
+    text: `
+      SELECT * FROM UserRoles
+      WHERE user_id = $1
+    `,
+    values: [id]
+  };
+
+  const checkResponse = await pool.query(checkQuery);
+
+  let sqlQuery;
+  if (checkResponse.rows.length > 0) {
+    sqlQuery = {
+      text: `
+        UPDATE UserRoles
+        SET role_id = $1
+        WHERE user_id = $2
+        RETURNING *
+      `,
+      values: [role_id, id]
+    };
+  } else {
+    sqlQuery = {
+      text: `
+        INSERT INTO UserRoles (user_id, role_id)
+        VALUES ($1, $2)
+        RETURNING *
+      `,
+      values: [id, role_id]
+    };
+  }
+
+  const response = await pool.query(sqlQuery);
+  return response.rows[0];
+};
+
+export const deleteUserModel = async (id) => {
+  const sqlQuery = {
+    text: 'DELETE FROM Users WHERE id = $1',
+    values: [id]
+  };
+  await pool.query(sqlQuery);
+};
+
 export const getAllUsersModel = async () => {
   const sqlQuery = {
     text: `

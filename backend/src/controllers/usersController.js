@@ -1,5 +1,5 @@
 
-import { registerUserModel, getUserModel, loginModel,getAllUsersModel } from '../models/usersModel.js'
+import { registerUserModel, getUserModel, loginModel,getAllUsersModel, updateUserRoleModel,deleteUserModel } from '../models/usersModel.js'
 import jwt from 'jsonwebtoken'
 
 export const getUser = async (req, res) => {
@@ -20,6 +20,27 @@ export const getAllUsers = async (req, res) => {
     res.json({ error: 'Error al procesar la solicitud' })
   }
 }
+
+export const updateUserRole = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role_id } = req.body;
+    const updatedUser = await updateUserRoleModel(id, role_id);
+    res.json({ user: updatedUser });
+  } catch (error) {
+    res.json({ error: 'Error al procesar la solicitud' });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await deleteUserModel(id);
+    res.json({ message: 'Usuario eliminado correctamente' });
+  } catch (error) {
+    res.json({ error: 'Error al procesar la solicitud' });
+  }
+};
 
 export const registerUser = async (req, res) => {
   try {

@@ -75,12 +75,12 @@ const Profile = () => {
             const fetchAllUsers = async () => {
                 try {
                     setAdminLoading(true);
-                    const response = await fetch(`${urlBaseServer}/users`, {
+                    const response = await fetch(`${urlBaseServer}/users/all`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     const users = await response.json();
                     console.log(users)
-                    const normalized = Array.isArray(users) ? users : users.users;
+                    const normalized = (Array.isArray(users) ? users : users.users).filter(u => u.id !== userId);
                     setAdminUsers(normalized);
                 } catch (error) {
                     console.error("Error fetching users for admin:", error);
@@ -120,6 +120,24 @@ const Profile = () => {
         }
     };
 
+    const handleRoleChange = async (userId, newRoleId) => {
+        try {
+            await fetch(`${urlBaseServer}/users/${userId}/role`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ role_id: newRoleId })
+            });
+
+            setAdminUsers(prev =>
+            prev.map(user =>
+                user.id === userId ? { ...user, role_id: newRoleId, role_description: prev.find(u => u.role_id == newRoleId)?.role_description } : user
+            )
+            );
+        } catch (error) {
+            console.error('Error actualizando rol:', error);
+        }
+    };
+
     const handleEditProduct = (id) => {
         navigate(`/products/edit/${id}`);
     };
@@ -146,20 +164,14 @@ const Profile = () => {
                 </div>
             </div>
 
-            {/* Admin Panel */}
-            {role == 'Administrador' && (
+            {/* Panel de administración */}
+            {role === 'Administrador' && (
                 <>
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                        <Link to={`/products/new`}>
-                            <Button label="Agregar Producto" icon="fa fa-plus" />
-                        </Link>
-                    </div>
-                    <div className="card shadow-sm">
+                    <div className="card shadow-sm mb-4">
                         <div className="card-header">
                             <h5 className="mb-0">Usuarios registrados</h5>
                         </div>
-                    </div>
-                    <div className="card-body">
+                        <div className="card-body">
                             {adminLoading ? (
                                 <div className="text-center py-4">
                                     <div className="spinner-border" role="status">
@@ -175,72 +187,52 @@ const Profile = () => {
                                     {adminUsers.map(user => (
                                         <div key={user.id} className="list-group-item d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center gap-3">
-                                                <img
-                                                    src={user.image}
-                                                    alt={user.name}
-                                                    style={{ width: 64, height: 64, objectFit: 'contain', borderRadius: 6 }}
-                                                    className="bg-light p-1"
-                                                />
                                                 <div>
-                                                    <div className="fw-semibold">{user.name}</div>
-                                                    <small className="text-muted">{user.email} • {user.role}</small>
+                                                    <div className="fw-semibold">{user.first_name} {user.last_name}</div>
+                                                    <small className="text-muted">{user.email} • {user.role_description || 'Sin rol'}</small>
                                                 </div>
                                             </div>
-
                                             <div className="d-flex gap-2 align-items-center">
                                                 <select
-                                                    type="button"
-                                                    className="btn btn-sm btn-primary"
-                                                    onClick={() => handleUserRole(user.id)}
+                                                    className="form-select"
+                                                    value={user.role_id || ''}
+                                                    onChange={(e) => handleRoleChange(user.id, e.target.value)}
                                                 >
-                                                    Editar
-                                                </select>
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-sm btn-danger"
-                                                    onClick={() => handleDeleteUser(user.id)}
-                                                >
-                                                    Eliminar
-                                                </button>
+                                                <option value="">Sin rol</option>
+                                                {adminUsers
+                                                .filter(u => u.role_description)
+                                                .map(u => (
+                                                    <option key={u.role_id} value={u.role_id}>
+                                                    {u.role_description}
+                                                    </option>
+                                                ))
+                                                }
+                                            </select>
+
+                                            <button
+                                                type="button"
+                                                className="btn btn-sm btn-danger"
+                                                onClick={() => handleDeleteUser(user.id)}
+                                            >
+                                                Eliminar
+                                            </button>
                                             </div>
                                         </div>
-                                    ))}
+                                        ))}
                                 </div>
                             )}
                         </div>
+                    </div>
+                </>
+            )}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            {role === 'Administrador' && (
+                <>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <Link to={`/products/new`}>
+                            <Button label="Agregar Producto" icon="fa fa-plus" />
+                        </Link>
+                    </div>
                     <div className="card shadow-sm">
                         <div className="card-header">
                             <h5 className="mb-0">Productos registrados</h5>
@@ -272,7 +264,6 @@ const Profile = () => {
                                                     <small className="text-muted">{prod.category} • {formatPrice(prod.price)}</small>
                                                 </div>
                                             </div>
-
                                             <div className="d-flex gap-2 align-items-center">
                                                 <button
                                                     type="button"
@@ -281,7 +272,7 @@ const Profile = () => {
                                                 >
                                                     Editar
                                                 </button>
-
+                                                
                                                 <button
                                                     type="button"
                                                     className="btn btn-sm btn-danger"

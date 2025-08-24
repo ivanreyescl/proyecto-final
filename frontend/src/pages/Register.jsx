@@ -5,8 +5,8 @@ import { UserContext } from '../context/UserContext.jsx';
 const Register = () => {
     const [user, setUser] = useState({
         email: '',
-        firstName: '',
-        lastName: '',
+        first_name: '',
+        last_name: '',
         password: '',
         confirmPassword: ''
     });
@@ -21,7 +21,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, firstName, lastName, password, confirmPassword } = user;
+        const { email, first_name, last_name, password, confirmPassword } = user;
 
         if (password.length < 6) {
             return returnAlert('La contraseña debe tener al menos 6 caracteres');
@@ -30,10 +30,10 @@ const Register = () => {
         } else if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
             return returnAlert('Por favor rellena todos los campos')
         } else {
-            const isRegistered = await register(email, firstName, lastName, password)
+            const isRegistered = await register(email, first_name, last_name, password)
 
             if (isRegistered) {
-                setUser({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' })
+                setUser({ email: '', first_name: '', last_name: '', password: '', confirmPassword: '' })
                 window.location.href = '/'
             }
         }
@@ -59,26 +59,26 @@ const Register = () => {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="firstName" className="form-label">Nombre</label>
+                            <label htmlFor="first_name" className="form-label">Nombre</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="firstName"
-                                name="firstName"
-                                value={user.firstName}
+                                id="first_name"
+                                name="first_name"
+                                value={user.first_name}
                                 onChange={handleChange}
                                 placeholder="Ingrese su nombre"
                                 required
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="lastName" className="form-label">Apellido</label>
+                            <label htmlFor="last_name" className="form-label">Apellido</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="lastName"
-                                name="lastName"
-                                value={user.lastName}
+                                id="last_name"
+                                name="last_name"
+                                value={user.last_name}
                                 onChange={handleChange}
                                 placeholder="Ingrese su apellido"
                                 required
@@ -113,7 +113,7 @@ const Register = () => {
                         <button
                             type="submit"
                             className="btn btn-primary w-100"
-                            disabled={!user.email.trim() || !user.firstName.trim() || !user.lastName.trim() || !user.password.trim() || !user.confirmPassword.trim()}
+                            disabled={!user.email.trim() || !user.first_name.trim() || !user.last_name.trim() || !user.password.trim() || !user.confirmPassword.trim()}
                         >
                             Registrarse
                         </button>

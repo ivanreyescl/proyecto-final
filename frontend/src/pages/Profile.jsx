@@ -9,7 +9,7 @@ import Button from '../components/Button';
 import { useAddToFavorite } from "../hooks/addToFavorite";
 
 const Profile = () => {
-    const { firstName, lastName, role, logout, userId, token } = useContext(UserContext);
+    const { first_name, last_name, role, logout, userId, token } = useContext(UserContext);
     const { deleteProduct } = useContext(ProductContext);
     const { cart } = useContext(CartContext);
     const { handleLike } = useAddToFavorite();
@@ -51,7 +51,7 @@ const Profile = () => {
 
                 fetchUserData();
             }
-            }, [role, firstName, lastName, token, userId]);
+            }, [role, first_name, last_name, token, userId]);
 
     // --- Fetch all products for admin view ---
     useEffect(() => {
@@ -122,7 +122,7 @@ const Profile = () => {
                     <div className="p-4 bg-primary bg-gradient text-white rounded-3 shadow">
                         <h1 className="display-6 mb-0">
                             <i className="bi bi-person-circle me-2"></i>
-                            ¡Bienvenido {firstName} {lastName}!
+                            ¡Bienvenido {first_name} {last_name}!
                         </h1>
                     </div>
                 </div>

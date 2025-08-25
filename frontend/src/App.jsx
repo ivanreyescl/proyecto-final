@@ -48,19 +48,19 @@ const App = () => {
                         />
                         <Route path="/products/new" element={
                             <ProductsForms />
-                          } 
+                          }
                         />
                         <Route path="/products/edit/:id" element={
                             <ProductsForms />
-                          } 
+                          }
                         />
-                        <Route path="/cart" element={<Cart /> }/>                  
+                        <Route path="/cart" element={<Cart /> }/>
                         <Route path="/products/:id" element={<Product />} />
                         <Route path="/profile" element={
                           <ProtectedRoute>
                             <Profile />
                           </ProtectedRoute>
-                          } 
+                          }
                         />
                         <Route path="/404" element={<NotFound />} />
                       </Routes>
@@ -70,7 +70,7 @@ const App = () => {
               </CartProvider>
             </FavoriteProvider>
           </UserProvider>
-        <ToastContainer />             
+        <ToastContainer />
       </BrowserRouter>
     </>
   );
